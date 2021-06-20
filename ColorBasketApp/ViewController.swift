@@ -94,7 +94,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                 let apiResponse: APIResponse = try JSONDecoder().decode(APIResponse.self, from: data)
                 serverDatas = apiResponse.data
                 print(serverDatas)
-//                print("카운트 \(serverDatas.count)")
                 for serverData in serverDatas {
                     guard let imageUrl: URL = URL(string: serverData.url) else { return }
                     
