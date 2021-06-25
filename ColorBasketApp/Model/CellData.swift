@@ -15,11 +15,11 @@ struct APIResponse: Codable {
 struct ServerData: Codable {
     let url: String
     let title: String?
-//    let color: [String]
+    let color: [String]
 }
 
 struct CellInfo {
     var image: UIImage
     var title: String
-//    var color: [String]
+    var color: [String]
 }

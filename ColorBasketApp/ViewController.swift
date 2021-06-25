@@ -11,7 +11,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     var imageCollectionView: UICollectionView?
     var imageSearchController = UISearchController(searchResultsController: nil)
-    var cellInfos: [CellInfo] = []
+    static var cellInfos: [CellInfo] = []
     var isLoading = false
     var count = 0
     let transition = ShowDetailAnimator()
@@ -19,7 +19,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     override func viewWillAppear(_ animated: Bool) {
         
         super.viewWillAppear(true)
-        if cellInfos.count == 0 {
+        if ViewController.cellInfos.count == 0 {
             self.getCellData(type: 2)
         }
     }
@@ -38,7 +38,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         
         guard let mainImageCollectionView = imageCollectionView else { return }
         
-//        imageSearchController = UISearchController(searchResultsController: nil )
         imageSearchController.searchBar.placeholder = "Search"
         self.navigationItem.searchController = imageSearchController
         
@@ -70,7 +69,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     func getCellData(type: Int) {
         
-        cellInfos = type == 1 ? [] : cellInfos
+        ViewController.cellInfos = type == 1 ? [] : ViewController.cellInfos
         
         if type == 3 {
             isLoading = true
@@ -100,9 +99,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                     do {
                         let imageData = try Data(contentsOf: imageUrl)
                         guard let image = UIImage(data: imageData) else { return }
-//                        self.cellInfos.append(CellInfo(image: image, title: serverData.title ?? "no title", color: serverData.color ))
-                        self.cellInfos.append(CellInfo(image: image, title: serverData.title ?? "no title" ))
-                        
+                        ViewController.cellInfos.append(CellInfo(image: image, title: serverData.title ?? "no title" , color: serverData.color))
                     } catch {
                         print(error.localizedDescription)
                     }
@@ -156,7 +153,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
         if section == 0 {
-            return cellInfos.count
+            return ViewController.cellInfos.count
         }
         return 1
     }
@@ -168,19 +165,19 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             
             cell.imageView.image = nil
 
-            if cellInfos.count == 0 {
+            if ViewController.cellInfos.count == 0 {
                 return cell
             }
             
-            if cellInfos.count < indexPath.item {
+            if ViewController.cellInfos.count < indexPath.item {
                 return cell
             }
 
             DispatchQueue.main.async {
-                cell.imageView.image = self.cellInfos[indexPath.item].image
+                cell.imageView.image = ViewController.cellInfos[indexPath.item].image
             }
             
-            cell.titleLabel.text = cellInfos[indexPath.item].title
+            cell.titleLabel.text = ViewController.cellInfos[indexPath.item].title
             cell.layer.cornerRadius = 10
 
             return cell
@@ -202,54 +199,37 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             return
         }
         
-        toVC.transitioningDelegate = self
-        toVC.modalPresentationStyle = .custom
-        toVC.cellInfo = cellInfos[indexPath.item]
+//        toVC.transitioningDelegate = self
+//        toVC.modalPresentationStyle = .custom
         
         guard let cell = collectionView.cellForItem(at: indexPath) else { return }
         
         let cellOriginPoint = cell.superview?.convert(cell.center, to: nil)
-        let cellOriginFrame = cell.superview?.convert(cell.frame, to: nil)
+        var cellOriginFrame = cell.superview?.convert(cell.frame, to: nil)
+        
+        cellOriginFrame?.size.height += 10
+        cellOriginFrame?.size.width += 10
         
         transition.setPoint(point: cellOriginPoint)
         transition.setFrame(frame: cellOriginFrame)
         
-        present(toVC, animated: true, completion: nil)
+        toVC.cellInfo = ViewController.cellInfos[indexPath.item]
+        toVC.cellSizeInfo = cellOriginFrame
+        
+        view.backgroundColor = .black
+        present(toVC, animated: false, completion: nil)
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let offsetY = scrollView.contentOffset.y
         let contentHeight = scrollView.contentSize.height
 
-        if (offsetY > contentHeight - scrollView.frame.height * 4) && !isLoading && cellInfos.count != 0 {
+        if (offsetY > contentHeight - scrollView.frame.height * 4) && !isLoading && ViewController.cellInfos.count != 0 {
             DispatchQueue.main.async {
                 self.getCellData(type: 3)
             }
         }
     }
 
-}
-
-extension ViewController: UIViewControllerTransitioningDelegate, UINavigationControllerDelegate {
-    
-    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        return transition
-    }
-    
-    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        return DisMissAnim()
-    }
-    
-    func interactionControllerForPresentation(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
-        return nil
-    }
-    
-    func interactionControllerForDismissal(using animator: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
-        return nil
-    }
-    
-    func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationController.Operation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        return nil
-    }
 }
 
