@@ -1,60 +1,61 @@
 //
-//  ViewController.swift
+//  HomeViewController.swift
 //  ColorBasketApp
 //
-//  Created by apple on 2021/06/10.
+//  Created by apple on 2021/09/02.
 //
 
 import UIKit
 
-class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+import UIKit
+
+class HomeViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, NTTransitionProtocol {
     
-    var imageCollectionView: UICollectionView?
+    var imageCollectionView: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout.init())
     var imageSearchController = UISearchController(searchResultsController: nil)
     static var cellInfos: [CellInfo] = []
     var isLoading = false
     var count = 0
-    let transition = ShowDetailAnimator()
+    let transition = DetailAnimationDelegate()
+    var selectedCell: UIView?
     
     override func viewWillAppear(_ animated: Bool) {
         
         super.viewWillAppear(true)
-        if ViewController.cellInfos.count == 0 {
+        if HomeViewController.cellInfos.count == 0 {
             self.getCellData(type: 2)
         }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+                
         let refreshContoller = UIRefreshControl()
         refreshContoller.addTarget(self, action: #selector(refreshData), for: .valueChanged)
-        
+                
         let tabBarView = UITabBarView()
         let collectionViewLayout = UICollectionViewFlowLayout()
         collectionViewLayout.scrollDirection = .vertical
         
-        imageCollectionView = UICollectionView(frame: self.view.frame, collectionViewLayout: collectionViewLayout)
-        
-        guard let mainImageCollectionView = imageCollectionView else { return }
-        
+        imageCollectionView.frame = self.view.frame
+        imageCollectionView.collectionViewLayout = collectionViewLayout
+                
         imageSearchController.searchBar.placeholder = "Search"
         self.navigationItem.searchController = imageSearchController
         
+        imageCollectionView.backgroundColor = .white
+        imageCollectionView.contentInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        imageCollectionView.showsVerticalScrollIndicator = false
         
-        mainImageCollectionView.backgroundColor = .white
-        mainImageCollectionView.contentInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-        mainImageCollectionView.showsVerticalScrollIndicator = false
-        
-        view.addSubview(mainImageCollectionView)
+        view.addSubview(imageCollectionView)
         view.addSubview(tabBarView)
-        mainImageCollectionView.refreshControl = refreshContoller
+        imageCollectionView.refreshControl = refreshContoller
         tabBarView.setupView()
         
-        mainImageCollectionView.delegate = self
-        mainImageCollectionView.dataSource = self
-        mainImageCollectionView.register(ImageCollectionViewCell.self, forCellWithReuseIdentifier: ImageCollectionViewCell.registerId)
-        mainImageCollectionView.register(MoreData.self, forCellWithReuseIdentifier: MoreData.registerId)
+        imageCollectionView.delegate = self
+        imageCollectionView.dataSource = self
+        imageCollectionView.register(ImageCollectionViewCell.self, forCellWithReuseIdentifier: ImageCollectionViewCell.registerId)
+        imageCollectionView.register(MoreData.self, forCellWithReuseIdentifier: MoreData.registerId)
         
     }
     
@@ -64,19 +65,19 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     }
     
     func stopRefresher() {
-        self.imageCollectionView?.refreshControl?.endRefreshing()
+        self.imageCollectionView.refreshControl?.endRefreshing()
     }
     
     func getCellData(type: Int) {
         
-        ViewController.cellInfos = type == 1 ? [] : ViewController.cellInfos
+        HomeViewController.cellInfos = type == 1 ? [] : HomeViewController.cellInfos
         
         if type == 3 {
             isLoading = true
         }
                 
         var serverDatas:[ServerData] = []
-        guard let url = URL(string: "https://api.colorbasket.shop/api/photo") else { return }
+        guard let url = URL(string: "https://colorbasketapi.herokuapp.com/api/photo") else { return }
         
         let session: URLSession = URLSession(configuration: .default)
         let dataTask: URLSessionDataTask = session.dataTask(with: url) { [self] (data: Data?, response: URLResponse?, error: Error?) in
@@ -99,13 +100,13 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                     do {
                         let imageData = try Data(contentsOf: imageUrl)
                         guard let image = UIImage(data: imageData) else { return }
-                        ViewController.cellInfos.append(CellInfo(image: image, title: serverData.title ?? "no title" , color: serverData.color))
+                        HomeViewController.cellInfos.append(CellInfo(image: image, title: serverData.title ?? "no title" , color: serverData.color))
                     } catch {
                         print(error.localizedDescription)
                     }
                 }
                 DispatchQueue.main.async {
-                    self.imageCollectionView?.reloadData()
+                    self.imageCollectionView.reloadData()
                     isLoading = false
                     stopRefresher()
                 }
@@ -153,7 +154,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
         if section == 0 {
-            return ViewController.cellInfos.count
+            return HomeViewController.cellInfos.count
         }
         return 1
     }
@@ -165,19 +166,19 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             
             cell.imageView.image = nil
 
-            if ViewController.cellInfos.count == 0 {
+            if HomeViewController.cellInfos.count == 0 {
                 return cell
             }
             
-            if ViewController.cellInfos.count < indexPath.item {
+            if HomeViewController.cellInfos.count < indexPath.item {
                 return cell
             }
 
             DispatchQueue.main.async {
-                cell.imageView.image = ViewController.cellInfos[indexPath.item].image
+                cell.imageView.image = HomeViewController.cellInfos[indexPath.item].image
             }
             
-            cell.titleLabel.text = ViewController.cellInfos[indexPath.item].title
+            cell.titleLabel.text = HomeViewController.cellInfos[indexPath.item].title
             cell.layer.cornerRadius = 10
 
             return cell
@@ -198,38 +199,90 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         guard let toVC = storyboard?.instantiateViewController(identifier: "ImageDetailViewController") as? ImageDetailViewController else {
             return
         }
-        
-//        toVC.transitioningDelegate = self
-//        toVC.modalPresentationStyle = .custom
-        
-        guard let cell = collectionView.cellForItem(at: indexPath) else { return }
-        
-        let cellOriginPoint = cell.superview?.convert(cell.center, to: nil)
+                
+        guard let cell = collectionView.cellForItem(at: indexPath) as? ImageCollectionViewCell else { return }
+                
         var cellOriginFrame = cell.superview?.convert(cell.frame, to: nil)
         
         cellOriginFrame?.size.height += 10
         cellOriginFrame?.size.width += 10
+                
+        toVC.cellInfos = HomeViewController.cellInfos
+        toVC.cellIndex = indexPath
         
-        transition.setPoint(point: cellOriginPoint)
-        transition.setFrame(frame: cellOriginFrame)
+        transition.originFrame = cellOriginFrame
+        transition.indexPath = indexPath
         
-        toVC.cellInfo = ViewController.cellInfos[indexPath.item]
-        toVC.cellSizeInfo = cellOriginFrame
-        
-        view.backgroundColor = .black
-        present(toVC, animated: false, completion: nil)
+        toVC.transitioningDelegate = transition
+        toVC.modalPresentationStyle = .custom
+                
+        present(toVC, animated: true, completion: nil)
+    }
+    
+    func pageViewControllerLayout () -> UICollectionViewFlowLayout {
+        let flowLayout = UICollectionViewFlowLayout()
+
+        flowLayout.minimumLineSpacing = 0
+        flowLayout.minimumInteritemSpacing = 0
+        flowLayout.scrollDirection = .horizontal
+        return flowLayout
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let offsetY = scrollView.contentOffset.y
         let contentHeight = scrollView.contentSize.height
 
-        if (offsetY > contentHeight - scrollView.frame.height * 4) && !isLoading && ViewController.cellInfos.count != 0 {
+        if (offsetY > contentHeight - scrollView.frame.height * 4) && !isLoading && HomeViewController.cellInfos.count != 0 {
             DispatchQueue.main.async {
                 self.getCellData(type: 3)
             }
         }
     }
+    
+    func transitionCollection() -> UICollectionView! {
+        return imageCollectionView
+    }
 
+}
+
+extension UIView {
+    func origin (_ point: CGPoint) {
+        frame.origin.x = point.x
+        frame.origin.y = point.y
+    }
+}
+
+var kIndexPathPointer = "kIndexPathPointer"
+
+extension UICollectionView {
+    
+    func setToIndexPath (_ indexPath : IndexPath){
+        objc_setAssociatedObject(self, &kIndexPathPointer, indexPath, objc_AssociationPolicy.OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+    }
+    
+    func toIndexPath () -> IndexPath {
+        let index = self.contentOffset.x/self.frame.size.width
+        if index > 0{
+            return IndexPath(row: Int(index), section: 0)
+        }else if let indexPath = objc_getAssociatedObject(self,&kIndexPathPointer) as? IndexPath {
+            return indexPath
+        }else{
+            return IndexPath(row: 0, section: 0)
+        }
+    }
+    
+    func fromPageIndexPath () -> IndexPath{
+        let index : Int = Int(self.contentOffset.x/self.frame.size.width)
+        return IndexPath(row: index, section: 0)
+    }
+}
+
+
+@objc protocol NTTransitionProtocol {
+    func transitionCollection() -> UICollectionView!
+}
+
+@objc protocol NTTansitionWaterfallGridViewProtocol{
+    func snapShotForTransition() -> UIView!
 }
 
