@@ -7,11 +7,16 @@
 
 import UIKit
 
-class ImageCollectionViewCell: UICollectionViewCell {
-    
+class ImageCollectionViewCell: UICollectionViewCell, UIGestureRecognizerDelegate, NTTansitionWaterfallGridViewProtocol {
+   
     static let registerId = "\(ImageCollectionViewCell.self)"
     var mainView: UIView = UIView()
-    var imageView: UIImageView = UIImageView()
+    var imageView: UIImageView = {
+        let ig = UIImageView()
+        ig.layer.cornerRadius = 10
+        ig.clipsToBounds = true
+        return ig
+    }()
     var titleLabel: UILabel = UILabel()
     var color: String = ""
     
@@ -25,12 +30,9 @@ class ImageCollectionViewCell: UICollectionViewCell {
     }
     
     private func setConstraint() {
-        
-        let titleLabelHeight:CGFloat = 30
-        let widthPadding:CGFloat = 20
-        
-        let imageViewSize = UIScreen.main.bounds.width/2 - (widthPadding + titleLabelHeight)
-        
+                
+        contentView.addSubview(imageView)
+        imageView.frame = CGRect(x: 0, y: 0, width: frame.size.width, height: frame.size.height)
         mainView.addSubview(imageView)
         mainView.addSubview(titleLabel)
         contentView.addSubview(mainView)
@@ -40,14 +42,12 @@ class ImageCollectionViewCell: UICollectionViewCell {
         mainView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
         mainView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
         mainView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
-        
+
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.topAnchor.constraint(equalTo: mainView.topAnchor, constant: 4).isActive = true
         imageView.leadingAnchor.constraint(equalTo: mainView.leadingAnchor, constant: 4).isActive = true
         imageView.trailingAnchor.constraint(equalTo: mainView.trailingAnchor, constant: 4).isActive = true
-        imageView.heightAnchor.constraint(equalToConstant: imageViewSize).isActive = true
-        imageView.layer.cornerRadius = 10
-        imageView.clipsToBounds = true
+        imageView.heightAnchor.constraint(equalTo: mainView.heightAnchor).isActive = true
         
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 5).isActive = true
@@ -56,4 +56,12 @@ class ImageCollectionViewCell: UICollectionViewCell {
         titleLabel.bottomAnchor.constraint(equalTo: mainView.bottomAnchor, constant: 4).isActive = true
         titleLabel.font = UIFont.boldSystemFont(ofSize: 20)
     }
+    
+    func snapShotForTransition() -> UIView! {
+        let snapShotView = UIImageView()
+        snapShotView.image = imageView.image
+        snapShotView.frame = imageView.frame
+        return snapShotView
+    }
+    
 }

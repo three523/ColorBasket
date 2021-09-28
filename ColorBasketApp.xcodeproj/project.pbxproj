@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		18676F81267645D60053C560 /* MoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18676F80267645D60053C560 /* MoreData.swift */; };
+		186B36A22685E2D700518E0D /* DetailImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186B36A12685E2D700518E0D /* DetailImageCell.swift */; };
 		18850767267AF2F200E13BDE /* ImageDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18850766267AF2F200E13BDE /* ImageDetailViewController.swift */; };
 		18850769267B1E1D00E13BDE /* ShowDetailAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18850768267B1E1D00E13BDE /* ShowDetailAnimator.swift */; };
 		1885076D267B379A00E13BDE /* DisMissAinm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1885076C267B379A00E13BDE /* DisMissAinm.swift */; };
@@ -20,10 +21,16 @@
 		188CB5252671C9E10092E684 /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188CB5242671C9E10092E684 /* ImageCollectionViewCell.swift */; };
 		188CB5282671CB5C0092E684 /* CellData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188CB5272671CB5C0092E684 /* CellData.swift */; };
 		188CB52E2671EE1F0092E684 /* UITabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188CB52D2671EE1F0092E684 /* UITabBarView.swift */; };
+		188FBAC826EF2C5700964BC7 /* ColorExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188FBAC726EF2C5700964BC7 /* ColorExampleViewController.swift */; };
+		189EDDDE2702EC100042660E /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189EDDDD2702EC100042660E /* Config.swift */; };
+		18A5B15026E0CC600089BEB1 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A5B14F26E0CC600089BEB1 /* HomeViewController.swift */; };
+		18A5B15326E0CE440089BEB1 /* MyProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A5B15226E0CE440089BEB1 /* MyProfileViewController.swift */; };
+		18A5B15526E0CE560089BEB1 /* LikeListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A5B15426E0CE560089BEB1 /* LikeListViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		18676F80267645D60053C560 /* MoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreData.swift; sourceTree = "<group>"; };
+		186B36A12685E2D700518E0D /* DetailImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailImageCell.swift; sourceTree = "<group>"; };
 		18850766267AF2F200E13BDE /* ImageDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDetailViewController.swift; sourceTree = "<group>"; };
 		18850768267B1E1D00E13BDE /* ShowDetailAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowDetailAnimator.swift; sourceTree = "<group>"; };
 		1885076C267B379A00E13BDE /* DisMissAinm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisMissAinm.swift; sourceTree = "<group>"; };
@@ -38,6 +45,11 @@
 		188CB5242671C9E10092E684 /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		188CB5272671CB5C0092E684 /* CellData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellData.swift; sourceTree = "<group>"; };
 		188CB52D2671EE1F0092E684 /* UITabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITabBarView.swift; sourceTree = "<group>"; };
+		188FBAC726EF2C5700964BC7 /* ColorExampleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExampleViewController.swift; sourceTree = "<group>"; };
+		189EDDDD2702EC100042660E /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
+		18A5B14F26E0CC600089BEB1 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		18A5B15226E0CE440089BEB1 /* MyProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileViewController.swift; sourceTree = "<group>"; };
+		18A5B15426E0CE560089BEB1 /* LikeListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeListViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,12 +82,14 @@
 		188CB50E2671C6760092E684 /* ColorBasketApp */ = {
 			isa = PBXGroup;
 			children = (
+				189EDDDC2702EBE70042660E /* Config */,
+				189EDDD82702E75B0042660E /* Http */,
+				18A5B15126E0CE110089BEB1 /* VIewControllers */,
 				1885076C267B379A00E13BDE /* DisMissAinm.swift */,
 				188CB50F2671C6760092E684 /* AppDelegate.swift */,
 				188CB5112671C6760092E684 /* SceneDelegate.swift */,
-				188CB5132671C6760092E684 /* ViewController.swift */,
 				18850768267B1E1D00E13BDE /* ShowDetailAnimator.swift */,
-				18850766267AF2F200E13BDE /* ImageDetailViewController.swift */,
+				186B36A12685E2D700518E0D /* DetailImageCell.swift */,
 				18676F80267645D60053C560 /* MoreData.swift */,
 				188CB52D2671EE1F0092E684 /* UITabBarView.swift */,
 				188CB5242671C9E10092E684 /* ImageCollectionViewCell.swift */,
@@ -94,6 +108,34 @@
 				188CB5272671CB5C0092E684 /* CellData.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		189EDDD82702E75B0042660E /* Http */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Http;
+			sourceTree = "<group>";
+		};
+		189EDDDC2702EBE70042660E /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				189EDDDD2702EC100042660E /* Config.swift */,
+			);
+			path = Config;
+			sourceTree = "<group>";
+		};
+		18A5B15126E0CE110089BEB1 /* VIewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				188CB5132671C6760092E684 /* ViewController.swift */,
+				18850766267AF2F200E13BDE /* ImageDetailViewController.swift */,
+				18A5B14F26E0CC600089BEB1 /* HomeViewController.swift */,
+				18A5B15226E0CE440089BEB1 /* MyProfileViewController.swift */,
+				18A5B15426E0CE560089BEB1 /* LikeListViewController.swift */,
+				188FBAC726EF2C5700964BC7 /* ColorExampleViewController.swift */,
+			);
+			path = VIewControllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -166,16 +208,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				188FBAC826EF2C5700964BC7 /* ColorExampleViewController.swift in Sources */,
+				18A5B15326E0CE440089BEB1 /* MyProfileViewController.swift in Sources */,
 				188CB5142671C6760092E684 /* ViewController.swift in Sources */,
+				186B36A22685E2D700518E0D /* DetailImageCell.swift in Sources */,
 				188CB5102671C6760092E684 /* AppDelegate.swift in Sources */,
 				188CB5252671C9E10092E684 /* ImageCollectionViewCell.swift in Sources */,
 				188CB5282671CB5C0092E684 /* CellData.swift in Sources */,
 				188CB52E2671EE1F0092E684 /* UITabBarView.swift in Sources */,
 				188CB5122671C6760092E684 /* SceneDelegate.swift in Sources */,
 				18850767267AF2F200E13BDE /* ImageDetailViewController.swift in Sources */,
+				18A5B15526E0CE560089BEB1 /* LikeListViewController.swift in Sources */,
 				18676F81267645D60053C560 /* MoreData.swift in Sources */,
 				18850769267B1E1D00E13BDE /* ShowDetailAnimator.swift in Sources */,
+				189EDDDE2702EC100042660E /* Config.swift in Sources */,
 				1885076D267B379A00E13BDE /* DisMissAinm.swift in Sources */,
+				18A5B15026E0CC600089BEB1 /* HomeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

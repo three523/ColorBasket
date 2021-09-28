@@ -7,13 +7,18 @@
 
 import UIKit
 
-class ImageDetailViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, NTTransitionProtocol {
-    
+protocol CVCellDelgate {
+    func swipeCellPresent(cellImageView: UIImageView, originCellImageView: UIImageView)
+    func collectionViewScrollEnabled(enable: Bool)
+}
+
+class ImageDetailViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, NTTransitionProtocol, CVCellDelgate {
     var cellInfos: [CellInfo] = []
     var cellSize: CGSize = CGSize(width: 250, height: 400)
     var cellIndex: IndexPath = IndexPath()
     var pullOffset = CGPoint.zero
     let spacing:CGFloat = 20
+    var changeCellIndexPath: IndexPath?
     
     lazy var detailCollectionView: UICollectionView = {
         let layout = CarouselLayout()
@@ -23,11 +28,16 @@ class ImageDetailViewController: UIViewController, UICollectionViewDelegate, UIC
         cv.dataSource = self
         cv.register(DetailImageCell.self, forCellWithReuseIdentifier: DetailImageCell.registId)
         cv.showsHorizontalScrollIndicator = false
+        cv.decelerationRate = .fast
+        cv.backgroundColor = UIColor(displayP3Red: 247/255, green: 247/255, blue: 245/255, alpha: 1)
         return cv
     }()
         
     override func viewDidLoad() {
+        
         super.viewDidLoad()
+        
+        self.navigationController?.isNavigationBarHidden = true
                 
         view.backgroundColor = UIColor(displayP3Red: 247/255, green: 247/255, blue: 245/255, alpha: 1)
                 
@@ -44,7 +54,6 @@ class ImageDetailViewController: UIViewController, UICollectionViewDelegate, UIC
             if finished {
                 self.detailCollectionView.scrollToItem(at: self.cellIndex,at:.centeredHorizontally, animated: false)
             }});
-
     }
     
     func addPictureClick(){
@@ -73,9 +82,10 @@ class ImageDetailViewController: UIViewController, UICollectionViewDelegate, UIC
         
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DetailImageCell.registId, for: indexPath) as? DetailImageCell else { return UICollectionViewCell() }
                 
-        cell.uiImageView.image = HomeViewController.cellInfos[indexPath.item].image
-        cell.layer.cornerRadius = 10
-        cell.clipsToBounds = true
+        cell.cardImageView.image = HomeViewController.cellInfos[indexPath.item].image
+        cell.pictureColor = HomeViewController.cellInfos[indexPath.item].color
+        cell.cellDelegate = self
+                
         return cell
     }
     
@@ -97,6 +107,23 @@ class ImageDetailViewController: UIViewController, UICollectionViewDelegate, UIC
     
     func transitionCollection() -> UICollectionView! {
         return detailCollectionView
+    }
+    
+    func swipeCellPresent(cellImageView: UIImageView, originCellImageView: UIImageView) {
+        let vc = ColorExampleViewController()
+        vc.seletedImageView.image = cellImageView.image
+        let transition = cardViewDetailDelegate()
+        transition.cardView = cellImageView
+        transition.originImageView = originCellImageView
+        
+        vc.transitioningDelegate = transition
+        vc.modalPresentationStyle = .custom
+                
+        self.present(vc, animated: true, completion: nil)
+    }
+    
+    func collectionViewScrollEnabled(enable: Bool) {
+        detailCollectionView.isScrollEnabled = enable
     }
 }
 

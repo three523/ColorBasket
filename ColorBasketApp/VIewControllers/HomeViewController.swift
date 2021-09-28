@@ -9,7 +9,7 @@ import UIKit
 
 import UIKit
 
-class HomeViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, NTTransitionProtocol {
+class HomeViewController: UIViewController , UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UINavigationControllerDelegate, NTTransitionProtocol {
     
     var imageCollectionView: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout.init())
     var imageSearchController = UISearchController(searchResultsController: nil)
@@ -32,6 +32,8 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                 
         let refreshContoller = UIRefreshControl()
         refreshContoller.addTarget(self, action: #selector(refreshData), for: .valueChanged)
+        
+        self.navigationController?.delegate = self
                 
         let tabBarView = UITabBarView()
         let collectionViewLayout = UICollectionViewFlowLayout()
@@ -196,10 +198,9 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let toVC = storyboard?.instantiateViewController(identifier: "ImageDetailViewController") as? ImageDetailViewController else {
-            return
-        }
-                
+        
+        let toVC = ImageDetailViewController()
+                        
         guard let cell = collectionView.cellForItem(at: indexPath) as? ImageCollectionViewCell else { return }
                 
         var cellOriginFrame = cell.superview?.convert(cell.frame, to: nil)
@@ -212,11 +213,12 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         
         transition.originFrame = cellOriginFrame
         transition.indexPath = indexPath
+        transition.mainView = imageCollectionView
         
         toVC.transitioningDelegate = transition
         toVC.modalPresentationStyle = .custom
-                
-        present(toVC, animated: true, completion: nil)
+        
+        self.navigationController?.pushViewController(toVC, animated: true)
     }
     
     func pageViewControllerLayout () -> UICollectionViewFlowLayout {
@@ -239,12 +241,11 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         }
     }
     
+    
     func transitionCollection() -> UICollectionView! {
         return imageCollectionView
     }
-
 }
-
 extension UIView {
     func origin (_ point: CGPoint) {
         frame.origin.x = point.x
