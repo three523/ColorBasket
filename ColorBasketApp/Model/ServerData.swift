@@ -9,16 +9,16 @@ import UIKit
 
 
 struct ServerData: Codable {
-    var data: [CellData]
+    var data: [JsonData]
     
-    init(data: [CellData]) {
+    init(data: [JsonData]) {
         self.data = data
     }
     
     static let EMPTY = ServerData(data: [])
 }
 
-struct CellData: Codable {
+struct JsonData: Codable {
     let url: String
     let title: String?
     let color: [String]
@@ -29,5 +29,19 @@ struct CellData: Codable {
         self.color = color
     }
     
-    static let EMPTY = CellData(url: "", title: "", color: [])
+    static let EMPTY = JsonData(url: "", title: "", color: [])
+}
+
+struct CellData {
+    let image: UIImage
+    let title: String?
+    let color: [String]
+    
+    init(image: UIImage, title: String?, color: [String]) {
+        self.image = image
+        self.title = title
+        self.color = color
+    }
+    
+    static let EMPTY = CellData(image: UIImage(), title: "", color: [])
 }

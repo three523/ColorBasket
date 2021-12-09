@@ -36,6 +36,7 @@ class NeumorphicView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         translatesAutoresizingMaskIntoConstraints = false
+        layer.cornerRadius = cornerRadius
         setupView()
     }
     
@@ -48,9 +49,8 @@ class NeumorphicView: UIView {
         self.layer.insertSublayer(lightShadow, at: 0)
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
+    override func layoutIfNeeded() {
+        super.layoutIfNeeded()
         darkShadow.frame = self.bounds
         darkShadow.backgroundColor = UIColor(hexFromString: "EFEEEE")?.cgColor
         darkShadow.shadowColor = UIColor(hexFromString: "D1CDC7")?.withAlphaComponent(0.5).cgColor
@@ -58,6 +58,13 @@ class NeumorphicView: UIView {
         lightShadow.frame = self.bounds
         lightShadow.backgroundColor = UIColor(hexFromString: "FFFFFF")?.cgColor
         lightShadow.shadowColor = UIColor.white.withAlphaComponent(0.9).cgColor
+        
+        let path = UIBezierPath(roundedRect: bounds.insetBy(dx: -3, dy: -3), cornerRadius: cornerRadius)
+        let cutout = UIBezierPath(roundedRect: bounds, cornerRadius: cornerRadius)
+        path.append(cutout)
+        
+        darkShadow.shadowPath = path.cgPath
+        lightShadow.shadowPath = path.cgPath
     }
     
 }
@@ -103,7 +110,8 @@ class NeumorphicInnerView: UIView {
         self.layer.addSublayer(lightShadow)
     }
     
-    override func layoutSubviews() {
+    override func layoutIfNeeded() {
+        super.layoutIfNeeded()
         darkShadow.frame = self.bounds
         lightShadow.frame = self.bounds
         
@@ -113,7 +121,6 @@ class NeumorphicInnerView: UIView {
         
         darkShadow.shadowPath = path.cgPath
         lightShadow.shadowPath = path.cgPath
-        
     }
 }
 
@@ -141,6 +148,7 @@ class NeumorphicViewController: ViewController {
         exampleCard.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         exampleCard.heightAnchor.constraint(equalToConstant: 100).isActive = true
         exampleCard.widthAnchor.constraint(equalToConstant: 300).isActive = true
+        exampleCard.layoutIfNeeded()
         
         view.addSubview(exampleInnerCard)
         
@@ -148,6 +156,8 @@ class NeumorphicViewController: ViewController {
         exampleInnerCard.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         exampleInnerCard.heightAnchor.constraint(equalToConstant: 100).isActive = true
         exampleInnerCard.widthAnchor.constraint(equalToConstant: 300).isActive = true
+        
+        exampleInnerCard.layoutIfNeeded()
     }
 }
 

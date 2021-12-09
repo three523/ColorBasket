@@ -12,17 +12,18 @@ protocol CVCellDelgate {
     func collectionViewScrollEnabled(enable: Bool)
 }
 
-class ImageDetailViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, NTTransitionProtocol, CVCellDelgate {
-    var cellInfos: [CellInfo] = []
+class ImageDetailViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, CVCellDelgate {
+    var viewModel: HomeViewModel = HomeViewModel()
     var cellSize: CGSize = CGSize(width: 250, height: 400)
     var cellIndex: IndexPath = IndexPath()
     var pullOffset = CGPoint.zero
     let spacing:CGFloat = 20
     var changeCellIndexPath: IndexPath?
+    let indicatorView: UIActivityIndicatorView = UIActivityIndicatorView()
+    let imageLoader = ImageLoader()
     
     lazy var detailCollectionView: UICollectionView = {
         let layout = CarouselLayout()
-        layout.scrollDirection = .horizontal
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.delegate = self
         cv.dataSource = self
@@ -36,6 +37,8 @@ class ImageDetailViewController: UIViewController, UICollectionViewDelegate, UIC
     override func viewDidLoad() {
         
         super.viewDidLoad()
+        
+        viewModel.cardCollection = {self.detailCollectionView.reloadData()}
         
         self.navigationController?.isNavigationBarHidden = true
                 
@@ -54,15 +57,21 @@ class ImageDetailViewController: UIViewController, UICollectionViewDelegate, UIC
             if finished {
                 self.detailCollectionView.scrollToItem(at: self.cellIndex,at:.centeredHorizontally, animated: false)
             }});
+        
+        view.addSubview(indicatorView)
+        
+        indicatorView.translatesAutoresizingMaskIntoConstraints = false
+        indicatorView.topAnchor.constraint(equalTo: detailCollectionView.bottomAnchor).isActive = true
+        indicatorView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+        indicatorView.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        indicatorView.widthAnchor.constraint(equalToConstant: 30).isActive = true
+        
+        viewModel.startLoading = indicatorView.startAnimating
+        viewModel.stopLoading = indicatorView.stopAnimating
     }
     
     func addPictureClick(){
         dismiss(animated: true, completion: nil)
-    }
-    
-    func setupCell(cellInfos: [CellInfo], cellIndex: IndexPath, previousIndex: Int) {
-        self.cellInfos = cellInfos
-        self.cellIndex = cellIndex
     }
     
     func animateZoomforCell(zoomCell: UICollectionViewCell) {
@@ -75,15 +84,14 @@ class ImageDetailViewController: UIViewController, UICollectionViewDelegate, UIC
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return cellInfos.count
+        return viewModel.getCount()
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DetailImageCell.registId, for: indexPath) as? DetailImageCell else { return UICollectionViewCell() }
                 
-        cell.cardImageView.image = HomeViewController.cellInfos[indexPath.item].image
-        cell.pictureColor = HomeViewController.cellInfos[indexPath.item].color
+        cell.setUpCardView(cellData: viewModel.getData(index: indexPath.item))
         cell.cellDelegate = self
                 
         return cell
@@ -94,16 +102,17 @@ class ImageDetailViewController: UIViewController, UICollectionViewDelegate, UIC
     }
     
     private func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
+        
+        let cellCount = viewModel.getCount()
 
-        let totalCellWidth = Int(cellSize.width) * cellInfos.count
-        let totalSpacingWidth = 20 * (cellInfos.count - 1)
+        let totalCellWidth = Int(cellSize.width) * cellCount
+        let totalSpacingWidth = 20 * (cellCount - 1)
 
         let leftInset = (detailCollectionView.frame.width - CGFloat(totalCellWidth + totalSpacingWidth)) / 2
         let rightInset = leftInset
 
         return UIEdgeInsets(top: 0, left: leftInset, bottom: 0, right: rightInset)
     }
-    
     
     func transitionCollection() -> UICollectionView! {
         return detailCollectionView
@@ -124,6 +133,14 @@ class ImageDetailViewController: UIViewController, UICollectionViewDelegate, UIC
     
     func collectionViewScrollEnabled(enable: Bool) {
         detailCollectionView.isScrollEnabled = enable
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let offsetX = scrollView.contentOffset.x
+        let contentWidth = scrollView.contentSize.width
+        if (offsetX > contentWidth - scrollView.frame.width) {
+            viewModel.more()
+        }
     }
 }
 

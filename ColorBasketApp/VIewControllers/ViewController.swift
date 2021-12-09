@@ -1,11 +1,14 @@
 
 import UIKit
+import FirebaseAuth
 
-class ViewController: UITabBarController {
-    
+class TabBarController: UITabBarController {
+
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        
+            
         let vc1 = UINavigationController(rootViewController: HomeViewController())
         let vc2 = LikeListViewController()
 //        let vc3 = ReviewViewController()
@@ -25,8 +28,31 @@ class ViewController: UITabBarController {
         for i in 0..<items.count {
             items[i].image = UIImage(systemName: images[i])
         }
-
         self.modalPresentationStyle = .fullScreen
         
+            
+    }
+}
+
+class ViewController: UIViewController {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if Auth.auth().currentUser != nil {
+            
+            let tabBarVC = TabBarController()
+            tabBarVC.modalPresentationStyle = .fullScreen
+            self.present(tabBarVC, animated: false, completion: nil)
+            
+        } else {
+            
+            let loginVC = LoginViewController()
+            loginVC.modalPresentationStyle = .fullScreen
+            self.present(loginVC, animated: false, completion: nil)
+        }
     }
 }

@@ -64,25 +64,25 @@ class ShowDetailAnimator: UIPercentDrivenInteractiveTransition, UIViewController
 
         toViewController!.view.isHidden = true
 
-        let snapShot = (gridView as! NTTansitionWaterfallGridViewProtocol).snapShotForTransition()
-        containerView.addSubview(snapShot!)
-        snapShot?.frame = orgFrame
-        snapShot?.clipsToBounds = true
-        snapShot?.layer.cornerRadius = 20
-        
-        UIView.animate(withDuration: 0.3) {
-            snapShot?.frame.size = CGSize(width: 250, height: 400)
-            snapShot?.center = toViewController!.view.center
-        } completion: { finished in
-            if finished {
-                snapShot?.removeFromSuperview()
-//                pageView.isHidden = false
-                toViewController!.view.isHidden = false
-
-                transitionContext.completeTransition(true)
-            }
-        
-        }
+//        let snapShot = (gridView as! NTTansitionWaterfallGridViewProtocol).snapShotForTransition()
+//        containerView.addSubview(snapShot!)
+//        snapShot?.frame = orgFrame
+//        snapShot?.clipsToBounds = true
+//        snapShot?.layer.cornerRadius = 20
+//
+//        UIView.animate(withDuration: 0.3) {
+//            snapShot?.frame.size = CGSize(width: 250, height: 400)
+//            snapShot?.center = toViewController!.view.center
+//        } completion: { finished in
+//            if finished {
+//                snapShot?.removeFromSuperview()
+////                pageView.isHidden = false
+//                toViewController!.view.isHidden = false
+//
+//                transitionContext.completeTransition(true)
+//            }
+//        
+//        }
     }
 }
 

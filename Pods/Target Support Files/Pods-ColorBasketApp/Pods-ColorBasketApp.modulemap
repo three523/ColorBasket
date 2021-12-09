@@ -1,0 +1,6 @@
+framework module Pods_ColorBasketApp {
+  umbrella header "Pods-ColorBasketApp-umbrella.h"
+
+  export *
+  module * { export * }
+}

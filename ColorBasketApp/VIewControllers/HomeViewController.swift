@@ -7,13 +7,12 @@
 
 import UIKit
 
-import UIKit
-
-class HomeViewController: UIViewController , UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UINavigationControllerDelegate, NTTransitionProtocol {
+class HomeViewController: UIViewController , UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UINavigationControllerDelegate {
+    
     
     var imageCollectionView: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout.init())
     var imageSearchController = UISearchController(searchResultsController: nil)
-    static var cellInfos: [CellInfo] = []
+    var viewModel: HomeViewModel = HomeViewModel()
     var isLoading = false
     var count = 0
     let transition = DetailAnimationDelegate()
@@ -22,7 +21,8 @@ class HomeViewController: UIViewController , UICollectionViewDelegate, UICollect
     override func viewWillAppear(_ animated: Bool) {
         
         super.viewWillAppear(true)
-        if HomeViewController.cellInfos.count == 0 {
+        if viewModel.getCount() == 0 {
+            viewModel.imageCollection = {self.imageCollectionView.reloadData()}
             self.getCellData(type: 2)
         }
     }
@@ -57,7 +57,7 @@ class HomeViewController: UIViewController , UICollectionViewDelegate, UICollect
         imageCollectionView.delegate = self
         imageCollectionView.dataSource = self
         imageCollectionView.register(ImageCollectionViewCell.self, forCellWithReuseIdentifier: ImageCollectionViewCell.registerId)
-        imageCollectionView.register(MoreData.self, forCellWithReuseIdentifier: MoreData.registerId)
+        imageCollectionView.register(LodingView.self, forCellWithReuseIdentifier: LodingView.registerId)
         
     }
     
@@ -72,63 +72,14 @@ class HomeViewController: UIViewController , UICollectionViewDelegate, UICollect
     
     func getCellData(type: Int) {
         
-        HomeViewController.cellInfos = type == 1 ? [] : HomeViewController.cellInfos
-        
-        if type == 3 {
-            isLoading = true
+        switch type {
+            case 1:
+                viewModel.refresh()
+            case 3:
+                isLoading = true
+            default:
+                viewModel.list()
         }
-                
-        var serverDatas:[ServerData] = []
-        guard let url = URL(string: "https://colorbasketapi.herokuapp.com/api/photo") else { return }
-        
-        let session: URLSession = URLSession(configuration: .default)
-        let dataTask: URLSessionDataTask = session.dataTask(with: url) { [self] (data: Data?, response: URLResponse?, error: Error?) in
-            
-            if let error = error {
-                print(error.localizedDescription)
-                return
-            }
-            
-            guard let data = data else { return }
-            
-            do {
-                
-                let apiResponse: APIResponse = try JSONDecoder().decode(APIResponse.self, from: data)
-                serverDatas = apiResponse.data
-                print(serverDatas)
-                for serverData in serverDatas {
-                    guard let imageUrl: URL = URL(string: serverData.url) else { return }
-                    
-                    do {
-                        let imageData = try Data(contentsOf: imageUrl)
-                        guard let image = UIImage(data: imageData) else { return }
-                        HomeViewController.cellInfos.append(CellInfo(image: image, title: serverData.title ?? "no title" , color: serverData.color))
-                    } catch {
-                        print(error.localizedDescription)
-                    }
-                }
-                DispatchQueue.main.async {
-                    self.imageCollectionView.reloadData()
-                    isLoading = false
-                    stopRefresher()
-                }
-                print("aaaa")
-            } catch let DecodingError.dataCorrupted(context) {
-                print(context)
-            } catch let DecodingError.keyNotFound(key, context) {
-                print("Key '\(key)' not found:", context.debugDescription)
-                print("codingPath:", context.codingPath)
-            } catch let DecodingError.valueNotFound(value, context) {
-                print("Value '\(value)' not found:", context.debugDescription)
-                print("codingPath:", context.codingPath)
-            } catch let DecodingError.typeMismatch(type, context)  {
-                print("Type '\(type)' mismatch:", context.debugDescription)
-                print("codingPath:", context.codingPath)
-            } catch {
-                print("error: ", error)
-            }
-        }
-        dataTask.resume()
     }
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
@@ -156,7 +107,7 @@ class HomeViewController: UIViewController , UICollectionViewDelegate, UICollect
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
         if section == 0 {
-            return HomeViewController.cellInfos.count
+            return viewModel.getCount()
         }
         return 1
     }
@@ -168,26 +119,24 @@ class HomeViewController: UIViewController , UICollectionViewDelegate, UICollect
             
             cell.imageView.image = nil
 
-            if HomeViewController.cellInfos.count == 0 {
+            if viewModel.getCount() == 0 {
                 return cell
             }
             
-            if HomeViewController.cellInfos.count < indexPath.item {
+            if viewModel.getCount() < indexPath.item {
                 return cell
             }
-
-            DispatchQueue.main.async {
-                cell.imageView.image = HomeViewController.cellInfos[indexPath.item].image
-            }
             
-            cell.titleLabel.text = HomeViewController.cellInfos[indexPath.item].title
+            let cellInfo = viewModel.getData(index: indexPath.item)
+            cell.setImage(cellInfo)
+            
             cell.layer.cornerRadius = 10
 
             return cell
         } else {
             
-           guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MoreData.registerId, for: indexPath) as? MoreData else {
-                return MoreData()
+           guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: LodingView.registerId, for: indexPath) as? LodingView else {
+                return LodingView()
             }
             if isLoading {
                 cell.indicatorView.startAnimating()
@@ -208,7 +157,7 @@ class HomeViewController: UIViewController , UICollectionViewDelegate, UICollect
         cellOriginFrame?.size.height += 10
         cellOriginFrame?.size.width += 10
                 
-        toVC.cellInfos = HomeViewController.cellInfos
+        toVC.viewModel = viewModel
         toVC.cellIndex = indexPath
         
         transition.originFrame = cellOriginFrame
@@ -234,7 +183,7 @@ class HomeViewController: UIViewController , UICollectionViewDelegate, UICollect
         let offsetY = scrollView.contentOffset.y
         let contentHeight = scrollView.contentSize.height
 
-        if (offsetY > contentHeight - scrollView.frame.height * 4) && !isLoading && HomeViewController.cellInfos.count != 0 {
+        if (offsetY > contentHeight - scrollView.frame.height * 4) && !isLoading && viewModel.getCount() != 0 {
             DispatchQueue.main.async {
                 self.getCellData(type: 3)
             }
@@ -279,11 +228,11 @@ extension UICollectionView {
 }
 
 
-@objc protocol NTTransitionProtocol {
-    func transitionCollection() -> UICollectionView!
-}
-
-@objc protocol NTTansitionWaterfallGridViewProtocol{
-    func snapShotForTransition() -> UIView!
-}
-
+//@objc protocol NTTransitionProtocol {
+//    func transitionCollection() -> UICollectionView!
+//}
+//
+//@objc protocol NTTansitionWaterfallGridViewProtocol{
+//    func snapShotForTransition() -> UIView!
+//}
+//

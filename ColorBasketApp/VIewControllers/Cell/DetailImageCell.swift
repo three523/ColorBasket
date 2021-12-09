@@ -48,6 +48,7 @@ class DetailImageCell: UICollectionViewCell, UICollectionViewDelegate, UICollect
     var cardViewConstraintCenterYAnchor: NSLayoutConstraint?
     var cardViewConstraintLazyAnchor: NSLayoutConstraint?
     var cellDelegate: CVCellDelgate?
+    let imageLoader: ImageLoader = ImageLoader()
     
     var nextCell: UICollectionViewCell?
     var prevCell: UICollectionViewCell?
@@ -102,8 +103,6 @@ class DetailImageCell: UICollectionViewCell, UICollectionViewDelegate, UICollect
         case .medium:
             createCardColorView()
         case .lazy: break
-        default:
-            break
         }
     }
     
@@ -119,7 +118,6 @@ class DetailImageCell: UICollectionViewCell, UICollectionViewDelegate, UICollect
         case .lazy:
             detailColorList()
         }
-        
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -139,6 +137,14 @@ class DetailImageCell: UICollectionViewCell, UICollectionViewDelegate, UICollect
         return CGSize(width: width, height: height)
     }
     
+    func setUpCardView(cellData: JsonData) {
+        cardImageView.image = nil
+        pictureColor = cellData.color
+        imageLoader.loadImage(url: cellData.url) { image in
+            self.cardImageView.image = image
+        }
+    }
+    
     func defaultCard(visibleAnimation: Bool) {
         
         guard let delegate = cellDelegate else { return }
@@ -147,8 +153,8 @@ class DetailImageCell: UICollectionViewCell, UICollectionViewDelegate, UICollect
         cardViewConstraintMediumYAnchor?.isActive = false
         cardViewConstraintCenterYAnchor?.isActive = true
         
-        let nextCellScaleAndPoint = nextCell!.transform.translatedBy(x: -100, y: 0)
-        let prevCellScaleAndPoint = prevCell!.transform.translatedBy(x: 100, y: 0)
+        let nextCellScaleAndPoint = nextCell != nil ? nextCell!.transform.translatedBy(x: -100, y: 0) : .identity
+        let prevCellScaleAndPoint = prevCell != nil ? prevCell!.transform.translatedBy(x: 100, y: 0) : .identity
         
         if visibleAnimation {
             UIView.animate(withDuration: 0.5, animations: {
@@ -172,7 +178,7 @@ class DetailImageCell: UICollectionViewCell, UICollectionViewDelegate, UICollect
     }
     
     func createCardColorView() {
-        
+                
         guard let delegate = cellDelegate else { return }
         delegate.collectionViewScrollEnabled(enable: false)
         
@@ -181,6 +187,7 @@ class DetailImageCell: UICollectionViewCell, UICollectionViewDelegate, UICollect
             vst.axis = .vertical
             vst.distribution = .fillEqually
             vst.alignment = .fill
+            vst.spacing = 3
             return vst
         }()
         let horizontalTopView: UIStackView = {
@@ -198,21 +205,7 @@ class DetailImageCell: UICollectionViewCell, UICollectionViewDelegate, UICollect
             return hst
         }()
         
-        for i in 1...2 {
-            for j in 1...3 {
-                let colorView = UIView()
-                colorView.clipsToBounds = true
-                colorView.layer.cornerRadius = 0.5 * colorView.bounds.size.width
-                colorView.backgroundColor = UIColor(hexFromString: pictureColor[i*j])
-                
-                i == 1 ? horizontalTopView.addArrangedSubview(colorView) : horizontalBottomView.addArrangedSubview(colorView)
-            }
-        }
-        colorListView.addArrangedSubview(horizontalBottomView)
-        colorListView.addArrangedSubview(horizontalTopView)
-        colorListView.center = contentView.center
         
-        cardDetailView.addSubview(colorListView)
         cardDetailView.frame = cardView.frame
         cardDetailView.center = contentView.center
         cardDetailView.backgroundColor = .white
@@ -230,19 +223,65 @@ class DetailImageCell: UICollectionViewCell, UICollectionViewDelegate, UICollect
         cardDetailView.backgroundColor = .white
         cardDetailView.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
         
+        cardDetailView.addSubview(colorListView)
+        
         colorListView.translatesAutoresizingMaskIntoConstraints = false
         colorListView.topAnchor.constraint(equalTo: self.cardImageView.bottomAnchor, constant: 10).isActive = true
         colorListView.leadingAnchor.constraint(equalTo: self.cardDetailView.leadingAnchor).isActive = true
         colorListView.trailingAnchor.constraint(equalTo: self.cardDetailView.trailingAnchor).isActive = true
         colorListView.bottomAnchor.constraint(equalTo: self.cardDetailView.bottomAnchor).isActive = true
         
+        colorListView.addArrangedSubview(horizontalTopView)
+        colorListView.addArrangedSubview(horizontalBottomView)
+        colorListView.center = contentView.center
+        
+        for i in 1...2 {
+            for j in 1...3 {
+                let listView = UIView()
+//                listView.clipsToBounds = true
+//                listView.backgroundColor = UIColor(hexFromString: pictureColor[i*j])
+                i == 1 ? horizontalTopView.addArrangedSubview(listView) : horizontalBottomView.addArrangedSubview(listView)
+//                self.layoutIfNeeded()
+//                listView.layer.cornerRadius = 0.5 * listView.frame.height
+//                let colorView = ColorView()
+//                i == 1 ? horizontalTopView.addArrangedSubview(colorView) : horizontalBottomView.addArrangedSubview(colorView)
+            }
+        }
+        
         self.layoutIfNeeded()
         
+        for j in 0...2 {
+            let stackView = horizontalTopView.arrangedSubviews[j]
+            let colorView = UIView()
+            colorView.frame.size = CGSize(width: stackView.frame.height, height: stackView.frame.height)
+            colorView.center = CGPoint(x: stackView.bounds.width/2, y: stackView.bounds.height/2)
+            colorView.layer.cornerRadius = colorView.frame.height/2
+            colorView.backgroundColor = UIColor(hexFromString: pictureColor[j])
+            stackView.addSubview(colorView)
+        }
+        for j in 0...2 {
+            let stackView = horizontalBottomView.arrangedSubviews[j]
+            let colorView = UIView()
+            colorView.frame.size = CGSize(width: stackView.frame.height, height: stackView.frame.height)
+            colorView.center = CGPoint(x: stackView.bounds.width/2, y: stackView.bounds.height/2)
+            colorView.layer.cornerRadius = colorView.frame.height/2
+            colorView.backgroundColor = UIColor(hexFromString: pictureColor[j+3])
+            stackView.addSubview(colorView)
+        }
+        
+        horizontalTopView.layoutSubviews()
+//        horizontalBottomView.arrangedSubviews.forEach { stackView in
+//            let colorView = UIView()
+//            colorView.frame.size = CGSize(width: stackView.frame.height, height: stackView.frame.height)
+//            colorView.center = stackView.center
+//            colorView.backgroundColor =
+//        }
         cardViewConstraintCenterYAnchor?.isActive = false
         cardViewConstraintMediumYAnchor?.isActive = true
         
         guard let cv = superview as? UICollectionView else { return }
         let indexPath = cv.indexPath(for: self)!
+        print(indexPath.item)
         let nextIndexPath = IndexPath(item: indexPath.item + 1, section: indexPath.section)
         let previousIndexPath = IndexPath(item: indexPath.item - 1, section: indexPath.section)
         nextCell = cv.cellForItem(at: nextIndexPath)
@@ -253,8 +292,8 @@ class DetailImageCell: UICollectionViewCell, UICollectionViewDelegate, UICollect
         nextCell?.transform = nextCell!.transform.scaledBy(x: 0.7, y: 0.7)
         prevCell?.transform = prevCell!.transform.scaledBy(x: 0.7, y: 0.7)
         
-        let nextCellTransform = nextCell!.transform.translatedBy(x: 100, y: 0)
-        let prevCellTransform = prevCell!.transform.translatedBy(x: -100, y: 0)
+        let nextCellTransform = nextCell != nil ? nextCell!.transform.translatedBy(x: 100, y: 0) : .identity
+        let prevCellTransform = prevCell != nil ? prevCell!.transform.translatedBy(x: -100, y: 0) : .identity
         
         UIView.animate(withDuration: 0.5, animations: {
             self.layoutIfNeeded()
@@ -274,7 +313,6 @@ class DetailImageCell: UICollectionViewCell, UICollectionViewDelegate, UICollect
             defaultCard(visibleAnimation: false)
         }
     }
-
 }
 
 extension UIColor {
@@ -292,5 +330,17 @@ extension UIColor {
             blue: CGFloat(rgbValue & 0x0000FF) / 255.0,
             alpha: alpha
         )
+    }
+}
+
+class ColorView: UIView {
+    let colorView = UIView()
+    func circle(color: UIColor?) {
+        colorView.bounds.size = CGSize(width: bounds.height, height: bounds.height)
+        let radius: CGFloat = self.bounds.size.height / 2
+        colorView.backgroundColor = color!
+        colorView.layer.cornerRadius = radius
+        colorView.center = self.center
+        self.addSubview(colorView)
     }
 }

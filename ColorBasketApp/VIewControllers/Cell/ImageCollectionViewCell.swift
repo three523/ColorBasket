@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ImageCollectionViewCell: UICollectionViewCell, UIGestureRecognizerDelegate, NTTansitionWaterfallGridViewProtocol {
+class ImageCollectionViewCell: UICollectionViewCell, UIGestureRecognizerDelegate {
    
     static let registerId = "\(ImageCollectionViewCell.self)"
     var mainView: UIView = UIView()
@@ -19,6 +19,8 @@ class ImageCollectionViewCell: UICollectionViewCell, UIGestureRecognizerDelegate
     }()
     var titleLabel: UILabel = UILabel()
     var color: String = ""
+    let imageLoader = ImageLoader()
+    var cellInfo: JsonData?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -55,6 +57,18 @@ class ImageCollectionViewCell: UICollectionViewCell, UIGestureRecognizerDelegate
         titleLabel.trailingAnchor.constraint(equalTo: mainView.trailingAnchor, constant: 4).isActive = true
         titleLabel.bottomAnchor.constraint(equalTo: mainView.bottomAnchor, constant: 4).isActive = true
         titleLabel.font = UIFont.boldSystemFont(ofSize: 20)
+    }
+    
+    func setImage(_ cellInfo: JsonData) {
+        
+        self.cellInfo = cellInfo
+        imageView.image = nil
+        titleLabel.text = cellInfo.title
+        
+        imageLoader.loadImage(url: cellInfo.url) { image in
+//            print(image?.size)
+            self.imageView.image = image
+        }
     }
     
     func snapShotForTransition() -> UIView! {
