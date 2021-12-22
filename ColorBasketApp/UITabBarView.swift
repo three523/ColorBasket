@@ -24,7 +24,7 @@ class UITabBarView: UIView {
         let searchView = UIView()
         let heartView = UIView()
         
-        let widthConstant:CGFloat = 30
+        let widthConstant:CGFloat = 22
         let heightConstant:CGFloat = 10
         let fontSize:CGFloat = 12
                
@@ -139,8 +139,8 @@ class UITabBarView: UIView {
             return
         }
         self.translatesAutoresizingMaskIntoConstraints = false
-        self.leadingAnchor.constraint(equalTo: rootView.leadingAnchor, constant: 75).isActive = true
-        self.trailingAnchor.constraint(equalTo: rootView.trailingAnchor, constant: -75).isActive = true
+        self.leadingAnchor.constraint(equalTo: rootView.leadingAnchor, constant: 70).isActive = true
+        self.trailingAnchor.constraint(equalTo: rootView.trailingAnchor, constant: -70).isActive = true
         self.bottomAnchor.constraint(equalTo: rootView.bottomAnchor, constant: -20).isActive = true
         self.heightAnchor.constraint(equalToConstant: 50).isActive = true
         self.backgroundColor = .white

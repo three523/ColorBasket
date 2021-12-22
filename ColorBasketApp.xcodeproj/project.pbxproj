@@ -3,14 +3,19 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		18676F81267645D60053C560 /* MoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18676F80267645D60053C560 /* MoreData.swift */; };
+		186B36A22685E2D700518E0D /* DetailImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186B36A12685E2D700518E0D /* DetailImageCell.swift */; };
 		18850767267AF2F200E13BDE /* ImageDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18850766267AF2F200E13BDE /* ImageDetailViewController.swift */; };
 		18850769267B1E1D00E13BDE /* ShowDetailAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18850768267B1E1D00E13BDE /* ShowDetailAnimator.swift */; };
 		1885076D267B379A00E13BDE /* DisMissAinm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1885076C267B379A00E13BDE /* DisMissAinm.swift */; };
+		188989802758CD6E00D6331F /* ExampleCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1889897F2758CD6E00D6331F /* ExampleCardCollectionViewCell.swift */; };
+		18898982275952C900D6331F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 18898981275952C900D6331F /* GoogleService-Info.plist */; };
+		1889898A275A331C00D6331F /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18898989275A331C00D6331F /* LoginViewController.swift */; };
+		1889898C275A634E00D6331F /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1889898B275A634E00D6331F /* RegisterViewController.swift */; };
 		188CB5102671C6760092E684 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188CB50F2671C6760092E684 /* AppDelegate.swift */; };
 		188CB5122671C6760092E684 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188CB5112671C6760092E684 /* SceneDelegate.swift */; };
 		188CB5142671C6760092E684 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188CB5132671C6760092E684 /* ViewController.swift */; };
@@ -18,15 +23,35 @@
 		188CB5192671C6770092E684 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 188CB5182671C6770092E684 /* Assets.xcassets */; };
 		188CB51C2671C6770092E684 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 188CB51A2671C6770092E684 /* LaunchScreen.storyboard */; };
 		188CB5252671C9E10092E684 /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188CB5242671C9E10092E684 /* ImageCollectionViewCell.swift */; };
-		188CB5282671CB5C0092E684 /* CellData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188CB5272671CB5C0092E684 /* CellData.swift */; };
+		188CB5282671CB5C0092E684 /* ServerData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188CB5272671CB5C0092E684 /* ServerData.swift */; };
 		188CB52E2671EE1F0092E684 /* UITabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188CB52D2671EE1F0092E684 /* UITabBarView.swift */; };
+		188FBAC826EF2C5700964BC7 /* ColorExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188FBAC726EF2C5700964BC7 /* ColorExampleViewController.swift */; };
+		189D5F972763F57600A9ACDF /* ColorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189D5F962763F57600A9ACDF /* ColorView.swift */; };
+		189D5F992764130E00A9ACDF /* CardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189D5F982764130E00A9ACDF /* CardViewModel.swift */; };
+		189D5F9B2764136000A9ACDF /* ColorList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189D5F9A2764136000A9ACDF /* ColorList.swift */; };
+		189EDDDE2702EC100042660E /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189EDDDD2702EC100042660E /* Config.swift */; };
+		189EDDE02702EECA0042660E /* HttpClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189EDDDF2702EECA0042660E /* HttpClient.swift */; };
+		189EDDE32702F1990042660E /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189EDDE22702F1990042660E /* Repository.swift */; };
+		189EDDE92702FBFA0042660E /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189EDDE82702FBFA0042660E /* HomeViewModel.swift */; };
+		189EDDEC27030B190042660E /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189EDDEB27030B190042660E /* ImageLoader.swift */; };
+		18A5B15026E0CC600089BEB1 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A5B14F26E0CC600089BEB1 /* HomeViewController.swift */; };
+		18A5B15326E0CE440089BEB1 /* MyProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A5B15226E0CE440089BEB1 /* MyProfileViewController.swift */; };
+		18A5B15526E0CE560089BEB1 /* LikeListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18A5B15426E0CE560089BEB1 /* LikeListViewController.swift */; };
+		18AFB7C827104A490048EB6C /* ExampleCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18AFB7C727104A490048EB6C /* ExampleCardView.swift */; };
+		18C812A2270EF0D70066BE83 /* NeumorphicView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C812A1270EF0D70066BE83 /* NeumorphicView.swift */; };
+		4DBD796C15B8621ECD880BA7 /* Pods_ColorBasketApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2210E6FB55E98193995D05B /* Pods_ColorBasketApp.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		18676F80267645D60053C560 /* MoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoreData.swift; sourceTree = "<group>"; };
+		186B36A12685E2D700518E0D /* DetailImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailImageCell.swift; sourceTree = "<group>"; };
 		18850766267AF2F200E13BDE /* ImageDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDetailViewController.swift; sourceTree = "<group>"; };
 		18850768267B1E1D00E13BDE /* ShowDetailAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowDetailAnimator.swift; sourceTree = "<group>"; };
 		1885076C267B379A00E13BDE /* DisMissAinm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisMissAinm.swift; sourceTree = "<group>"; };
+		1889897F2758CD6E00D6331F /* ExampleCardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleCardCollectionViewCell.swift; sourceTree = "<group>"; };
+		18898981275952C900D6331F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		18898989275A331C00D6331F /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		1889898B275A634E00D6331F /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		188CB50C2671C6760092E684 /* ColorBasketApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ColorBasketApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		188CB50F2671C6760092E684 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		188CB5112671C6760092E684 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -36,8 +61,25 @@
 		188CB51B2671C6770092E684 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		188CB51D2671C6770092E684 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		188CB5242671C9E10092E684 /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
-		188CB5272671CB5C0092E684 /* CellData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellData.swift; sourceTree = "<group>"; };
+		188CB5272671CB5C0092E684 /* ServerData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerData.swift; sourceTree = "<group>"; };
 		188CB52D2671EE1F0092E684 /* UITabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITabBarView.swift; sourceTree = "<group>"; };
+		188FBAC726EF2C5700964BC7 /* ColorExampleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExampleViewController.swift; sourceTree = "<group>"; };
+		189D5F962763F57600A9ACDF /* ColorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorView.swift; sourceTree = "<group>"; };
+		189D5F982764130E00A9ACDF /* CardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardViewModel.swift; sourceTree = "<group>"; };
+		189D5F9A2764136000A9ACDF /* ColorList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorList.swift; sourceTree = "<group>"; };
+		189EDDDD2702EC100042660E /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
+		189EDDDF2702EECA0042660E /* HttpClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpClient.swift; sourceTree = "<group>"; };
+		189EDDE22702F1990042660E /* Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
+		189EDDE82702FBFA0042660E /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		189EDDEB27030B190042660E /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
+		18A5B14F26E0CC600089BEB1 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		18A5B15226E0CE440089BEB1 /* MyProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileViewController.swift; sourceTree = "<group>"; };
+		18A5B15426E0CE560089BEB1 /* LikeListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeListViewController.swift; sourceTree = "<group>"; };
+		18AFB7C727104A490048EB6C /* ExampleCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleCardView.swift; sourceTree = "<group>"; };
+		18C812A1270EF0D70066BE83 /* NeumorphicView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NeumorphicView.swift; sourceTree = "<group>"; };
+		4296B0A833818E89210F6BE6 /* Pods-ColorBasketApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ColorBasketApp.debug.xcconfig"; path = "Target Support Files/Pods-ColorBasketApp/Pods-ColorBasketApp.debug.xcconfig"; sourceTree = "<group>"; };
+		5D866B9EA527461610B97307 /* Pods-ColorBasketApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ColorBasketApp.release.xcconfig"; path = "Target Support Files/Pods-ColorBasketApp/Pods-ColorBasketApp.release.xcconfig"; sourceTree = "<group>"; };
+		E2210E6FB55E98193995D05B /* Pods_ColorBasketApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ColorBasketApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,17 +87,29 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4DBD796C15B8621ECD880BA7 /* Pods_ColorBasketApp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		10492C1DAD9920C757AB88A9 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				4296B0A833818E89210F6BE6 /* Pods-ColorBasketApp.debug.xcconfig */,
+				5D866B9EA527461610B97307 /* Pods-ColorBasketApp.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		188CB5032671C6760092E684 = {
 			isa = PBXGroup;
 			children = (
 				188CB50E2671C6760092E684 /* ColorBasketApp */,
 				188CB50D2671C6760092E684 /* Products */,
+				10492C1DAD9920C757AB88A9 /* Pods */,
+				8DE22132B2281D542C30C706 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -70,20 +124,25 @@
 		188CB50E2671C6760092E684 /* ColorBasketApp */ = {
 			isa = PBXGroup;
 			children = (
+				18C812A0270EF08A0066BE83 /* ExampleCard */,
+				189EDDEA27030B000042660E /* ImageCache */,
+				189EDDE12702F17D0042660E /* Repository */,
+				189EDDDC2702EBE70042660E /* Config */,
+				189EDDD82702E75B0042660E /* Http */,
+				18A5B15126E0CE110089BEB1 /* VIewControllers */,
 				1885076C267B379A00E13BDE /* DisMissAinm.swift */,
 				188CB50F2671C6760092E684 /* AppDelegate.swift */,
 				188CB5112671C6760092E684 /* SceneDelegate.swift */,
-				188CB5132671C6760092E684 /* ViewController.swift */,
 				18850768267B1E1D00E13BDE /* ShowDetailAnimator.swift */,
-				18850766267AF2F200E13BDE /* ImageDetailViewController.swift */,
 				18676F80267645D60053C560 /* MoreData.swift */,
 				188CB52D2671EE1F0092E684 /* UITabBarView.swift */,
-				188CB5242671C9E10092E684 /* ImageCollectionViewCell.swift */,
+				189D5F962763F57600A9ACDF /* ColorView.swift */,
 				188CB52A2671CC4D0092E684 /* Model */,
 				188CB5152671C6760092E684 /* Main.storyboard */,
 				188CB5182671C6770092E684 /* Assets.xcassets */,
 				188CB51A2671C6770092E684 /* LaunchScreen.storyboard */,
 				188CB51D2671C6770092E684 /* Info.plist */,
+				18898981275952C900D6331F /* GoogleService-Info.plist */,
 			);
 			path = ColorBasketApp;
 			sourceTree = "<group>";
@@ -91,9 +150,95 @@
 		188CB52A2671CC4D0092E684 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				188CB5272671CB5C0092E684 /* CellData.swift */,
+				188CB5272671CB5C0092E684 /* ServerData.swift */,
+				189D5F9A2764136000A9ACDF /* ColorList.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		189EDDD82702E75B0042660E /* Http */ = {
+			isa = PBXGroup;
+			children = (
+				189EDDDF2702EECA0042660E /* HttpClient.swift */,
+			);
+			path = Http;
+			sourceTree = "<group>";
+		};
+		189EDDDC2702EBE70042660E /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				189EDDDD2702EC100042660E /* Config.swift */,
+			);
+			path = Config;
+			sourceTree = "<group>";
+		};
+		189EDDE12702F17D0042660E /* Repository */ = {
+			isa = PBXGroup;
+			children = (
+				189EDDE22702F1990042660E /* Repository.swift */,
+			);
+			path = Repository;
+			sourceTree = "<group>";
+		};
+		189EDDE62702FABD0042660E /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				188CB5242671C9E10092E684 /* ImageCollectionViewCell.swift */,
+				186B36A12685E2D700518E0D /* DetailImageCell.swift */,
+				1889897F2758CD6E00D6331F /* ExampleCardCollectionViewCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		189EDDE72702FAC50042660E /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				189EDDE82702FBFA0042660E /* HomeViewModel.swift */,
+				189D5F982764130E00A9ACDF /* CardViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		189EDDEA27030B000042660E /* ImageCache */ = {
+			isa = PBXGroup;
+			children = (
+				189EDDEB27030B190042660E /* ImageLoader.swift */,
+			);
+			path = ImageCache;
+			sourceTree = "<group>";
+		};
+		18A5B15126E0CE110089BEB1 /* VIewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				189EDDE72702FAC50042660E /* ViewModel */,
+				189EDDE62702FABD0042660E /* Cell */,
+				188CB5132671C6760092E684 /* ViewController.swift */,
+				18850766267AF2F200E13BDE /* ImageDetailViewController.swift */,
+				18A5B14F26E0CC600089BEB1 /* HomeViewController.swift */,
+				18A5B15226E0CE440089BEB1 /* MyProfileViewController.swift */,
+				18A5B15426E0CE560089BEB1 /* LikeListViewController.swift */,
+				188FBAC726EF2C5700964BC7 /* ColorExampleViewController.swift */,
+				18898989275A331C00D6331F /* LoginViewController.swift */,
+				1889898B275A634E00D6331F /* RegisterViewController.swift */,
+			);
+			path = VIewControllers;
+			sourceTree = "<group>";
+		};
+		18C812A0270EF08A0066BE83 /* ExampleCard */ = {
+			isa = PBXGroup;
+			children = (
+				18C812A1270EF0D70066BE83 /* NeumorphicView.swift */,
+				18AFB7C727104A490048EB6C /* ExampleCardView.swift */,
+			);
+			path = ExampleCard;
+			sourceTree = "<group>";
+		};
+		8DE22132B2281D542C30C706 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E2210E6FB55E98193995D05B /* Pods_ColorBasketApp.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -103,9 +248,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 188CB5202671C6770092E684 /* Build configuration list for PBXNativeTarget "ColorBasketApp" */;
 			buildPhases = (
+				4D8FB019B5DC516D9BA8CBBD /* [CP] Check Pods Manifest.lock */,
 				188CB5082671C6760092E684 /* Sources */,
 				188CB5092671C6760092E684 /* Frameworks */,
 				188CB50A2671C6760092E684 /* Resources */,
+				FF2B70E5EFBAB963A7DFECD0 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -156,26 +303,87 @@
 				188CB51C2671C6770092E684 /* LaunchScreen.storyboard in Resources */,
 				188CB5192671C6770092E684 /* Assets.xcassets in Resources */,
 				188CB5172671C6760092E684 /* Main.storyboard in Resources */,
+				18898982275952C900D6331F /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		4D8FB019B5DC516D9BA8CBBD /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-ColorBasketApp-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FF2B70E5EFBAB963A7DFECD0 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ColorBasketApp/Pods-ColorBasketApp-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-ColorBasketApp/Pods-ColorBasketApp-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ColorBasketApp/Pods-ColorBasketApp-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		188CB5082671C6760092E684 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				18C812A2270EF0D70066BE83 /* NeumorphicView.swift in Sources */,
+				189D5F9B2764136000A9ACDF /* ColorList.swift in Sources */,
+				189EDDE92702FBFA0042660E /* HomeViewModel.swift in Sources */,
+				188FBAC826EF2C5700964BC7 /* ColorExampleViewController.swift in Sources */,
+				189EDDEC27030B190042660E /* ImageLoader.swift in Sources */,
+				18A5B15326E0CE440089BEB1 /* MyProfileViewController.swift in Sources */,
 				188CB5142671C6760092E684 /* ViewController.swift in Sources */,
+				186B36A22685E2D700518E0D /* DetailImageCell.swift in Sources */,
 				188CB5102671C6760092E684 /* AppDelegate.swift in Sources */,
 				188CB5252671C9E10092E684 /* ImageCollectionViewCell.swift in Sources */,
-				188CB5282671CB5C0092E684 /* CellData.swift in Sources */,
+				188CB5282671CB5C0092E684 /* ServerData.swift in Sources */,
 				188CB52E2671EE1F0092E684 /* UITabBarView.swift in Sources */,
 				188CB5122671C6760092E684 /* SceneDelegate.swift in Sources */,
+				1889898A275A331C00D6331F /* LoginViewController.swift in Sources */,
+				189D5F992764130E00A9ACDF /* CardViewModel.swift in Sources */,
 				18850767267AF2F200E13BDE /* ImageDetailViewController.swift in Sources */,
+				18A5B15526E0CE560089BEB1 /* LikeListViewController.swift in Sources */,
+				188989802758CD6E00D6331F /* ExampleCardCollectionViewCell.swift in Sources */,
+				189D5F972763F57600A9ACDF /* ColorView.swift in Sources */,
+				1889898C275A634E00D6331F /* RegisterViewController.swift in Sources */,
 				18676F81267645D60053C560 /* MoreData.swift in Sources */,
 				18850769267B1E1D00E13BDE /* ShowDetailAnimator.swift in Sources */,
+				189EDDDE2702EC100042660E /* Config.swift in Sources */,
 				1885076D267B379A00E13BDE /* DisMissAinm.swift in Sources */,
+				189EDDE02702EECA0042660E /* HttpClient.swift in Sources */,
+				18AFB7C827104A490048EB6C /* ExampleCardView.swift in Sources */,
+				18A5B15026E0CC600089BEB1 /* HomeViewController.swift in Sources */,
+				189EDDE32702F1990042660E /* Repository.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -252,7 +460,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -307,7 +515,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -319,6 +527,7 @@
 		};
 		188CB5212671C6770092E684 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4296B0A833818E89210F6BE6 /* Pods-ColorBasketApp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -339,6 +548,7 @@
 		};
 		188CB5222671C6770092E684 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5D866B9EA527461610B97307 /* Pods-ColorBasketApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;

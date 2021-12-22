@@ -7,73 +7,135 @@
 
 import UIKit
 
-//class ShowDetailAnimator: NSObject {
-//
-//}
+let animationScale = UIScreen.main.bounds.width / ((UIScreen.main.bounds.size.width / 2)-5.0)
 
-class ShowDetailAnimator: UIPercentDrivenInteractiveTransition, UIViewControllerAnimatedTransitioning {
-    var originPoint: CGPoint?
-    var originFrame: CGRect?
+class DetailAnimationDelegate: NSObject, UIViewControllerTransitioningDelegate {
     
-    func setPoint(point: CGPoint?) {
-        self.originPoint = point
+    var originFrame: CGRect?
+    var indexPath: IndexPath?
+    var mainView: UICollectionView?
+    
+    let trainsition = ShowDetailAnimator()
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        trainsition.setFrame(frame: originFrame)
+        trainsition.indexPath = indexPath
+        trainsition.mainView = mainView
+        return trainsition
     }
     
     func setFrame(frame: CGRect?) {
         self.originFrame = frame
     }
     
+}
+
+class ShowDetailAnimator: UIPercentDrivenInteractiveTransition, UIViewControllerAnimatedTransitioning {
+    
+    var originFrame: CGRect?
+    var indexPath: IndexPath?
+    var mainView: UICollectionView?
+    
+    func setFrame(frame: CGRect?) {
+        self.originFrame = frame
+    }
+    
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
-        return 1
+        return 0.5
     }
     
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
         let containerView = transitionContext.containerView
+        let fromViewController = transitionContext.viewController(forKey: .from) as UIViewController?
+        let toViewController = transitionContext.viewController(forKey: .to) as UIViewController?
         
-        guard let toView = transitionContext.view(forKey: .to) else { return }
+//        let mainView = (fromViewController as! NTTransitionProtocol).transitionCollection()!
+//        let pageView = (toViewController as! NTTransitionProtocol).transitionCollection()!
+        
+        fromViewController!.view.isHidden = true
+        
+        guard let toView = toViewController?.view else { return }
+        
         guard let orgFrame = originFrame else { return }
-
-        toView.frame = orgFrame
-        toView.transform = CGAffineTransform(scaleX: 1, y: 1)
         
         containerView.addSubview(toView)
-        containerView.bringSubviewToFront(toView)
         
-        toView.layer.masksToBounds = true
-        toView.layer.cornerRadius = 20
-        toView.alpha = 0
         
-        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0.5, options: .curveEaseOut, animations: {
-            toView.transform = .identity
-            toView.alpha = 1
-        }) { _ in
-            
-            toView.translatesAutoresizingMaskIntoConstraints = false
-            toView.topAnchor.constraint(equalTo: containerView.topAnchor).isActive = true
-            toView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor).isActive = true
-            toView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor).isActive = true
-            toView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor).isActive = true
-            
-            UIView.animate(withDuration: 1) {
-                containerView.layoutIfNeeded()
-            }
-        }
+        let gridView = mainView!.cellForItem(at: indexPath!)
 
-//        let duration = transitionDuration(using: transitionContext)
-//        let frame = transitionContext.finalFrame(for: toVC)
+        toViewController!.view.isHidden = true
+
+//        let snapShot = (gridView as! NTTansitionWaterfallGridViewProtocol).snapShotForTransition()
+//        containerView.addSubview(snapShot!)
+//        snapShot?.frame = orgFrame
+//        snapShot?.clipsToBounds = true
+//        snapShot?.layer.cornerRadius = 20
 //
-//        toVC.uiTitleLabel.alpha = 0.0
+//        UIView.animate(withDuration: 0.3) {
+//            snapShot?.frame.size = CGSize(width: 250, height: 400)
+//            snapShot?.center = toViewController!.view.center
+//        } completion: { finished in
+//            if finished {
+//                snapShot?.removeFromSuperview()
+////                pageView.isHidden = false
+//                toViewController!.view.isHidden = false
 //
-//        UIView.animate(withDuration: duration) {
-//            toVC.uiTitleLabel.alpha = 1.0
-//            toView.frame = frame
-//            toView.transform = .identity
-//            toView.layoutIfNeeded()
-//        } completion: { success in
-//            transitionContext.completeTransition(true)
+//                transitionContext.completeTransition(true)
+//            }
+//        
 //        }
-        
-        transitionContext.completeTransition(true)
+    }
+}
 
+class cardViewDetailDelegate: NSObject, UIViewControllerTransitioningDelegate {
+    
+    var cardView: UIImageView?
+    var originImageView: UIImageView?
+    
+    let transition = cardViewPresentAnimator()
+    
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        transition.cardView = cardView
+        transition.originImageView = originImageView
+        return transition
+    }
+}
+
+class cardViewPresentAnimator: UIPercentDrivenInteractiveTransition, UIViewControllerAnimatedTransitioning {
+    
+    var cardView: UIImageView?
+    var originImageView: UIImageView?
+    
+    func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
+        return 0.3
+    }
+    
+    func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
+        let containerView = transitionContext.containerView
+        let toVC = transitionContext.viewController(forKey: .to) as UIViewController?
+        
+        guard let toView = toVC?.view else { return }
+                
+        guard let cardView = cardView else { return }
+        cardView.clipsToBounds = true
+        cardView.layer.cornerRadius = 20
+        
+        containerView.addSubview(toView)
+        
+        toView.isHidden = true
+                        
+        containerView.addSubview(cardView)
+        originImageView!.isHidden = true
+                        
+        UIView.animate(withDuration: 0.3, animations: {
+            cardView.frame = CGRect(x: cardView.frame.origin.x, y: 0, width: cardView.frame.width, height: cardView.frame.height)
+            cardView.alpha = 0
+        }, completion: { finished in
+            if finished {
+                toView.isHidden = false
+                cardView.removeFromSuperview()
+                self.originImageView!.isHidden = false
+                transitionContext.completeTransition(true)
+            }
+        })
     }
 }

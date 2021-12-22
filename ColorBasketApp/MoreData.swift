@@ -7,10 +7,10 @@
 
 import UIKit
 
-class MoreData: UICollectionViewCell {
+class LodingView: UICollectionViewCell {
     
     var indicatorView = UIActivityIndicatorView()
-    static let registerId = "\(MoreData.self)"
+    static let registerId = "\(LodingView.self)"
     
     override init(frame: CGRect) {
         super.init(frame: frame)
