@@ -26,6 +26,9 @@
 		188CB5282671CB5C0092E684 /* ServerData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188CB5272671CB5C0092E684 /* ServerData.swift */; };
 		188CB52E2671EE1F0092E684 /* UITabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188CB52D2671EE1F0092E684 /* UITabBarView.swift */; };
 		188FBAC826EF2C5700964BC7 /* ColorExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188FBAC726EF2C5700964BC7 /* ColorExampleViewController.swift */; };
+		189D5F972763F57600A9ACDF /* ColorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189D5F962763F57600A9ACDF /* ColorView.swift */; };
+		189D5F992764130E00A9ACDF /* CardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189D5F982764130E00A9ACDF /* CardViewModel.swift */; };
+		189D5F9B2764136000A9ACDF /* ColorList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189D5F9A2764136000A9ACDF /* ColorList.swift */; };
 		189EDDDE2702EC100042660E /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189EDDDD2702EC100042660E /* Config.swift */; };
 		189EDDE02702EECA0042660E /* HttpClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189EDDDF2702EECA0042660E /* HttpClient.swift */; };
 		189EDDE32702F1990042660E /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189EDDE22702F1990042660E /* Repository.swift */; };
@@ -61,6 +64,9 @@
 		188CB5272671CB5C0092E684 /* ServerData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerData.swift; sourceTree = "<group>"; };
 		188CB52D2671EE1F0092E684 /* UITabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITabBarView.swift; sourceTree = "<group>"; };
 		188FBAC726EF2C5700964BC7 /* ColorExampleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExampleViewController.swift; sourceTree = "<group>"; };
+		189D5F962763F57600A9ACDF /* ColorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorView.swift; sourceTree = "<group>"; };
+		189D5F982764130E00A9ACDF /* CardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardViewModel.swift; sourceTree = "<group>"; };
+		189D5F9A2764136000A9ACDF /* ColorList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorList.swift; sourceTree = "<group>"; };
 		189EDDDD2702EC100042660E /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		189EDDDF2702EECA0042660E /* HttpClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HttpClient.swift; sourceTree = "<group>"; };
 		189EDDE22702F1990042660E /* Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
@@ -130,6 +136,7 @@
 				18850768267B1E1D00E13BDE /* ShowDetailAnimator.swift */,
 				18676F80267645D60053C560 /* MoreData.swift */,
 				188CB52D2671EE1F0092E684 /* UITabBarView.swift */,
+				189D5F962763F57600A9ACDF /* ColorView.swift */,
 				188CB52A2671CC4D0092E684 /* Model */,
 				188CB5152671C6760092E684 /* Main.storyboard */,
 				188CB5182671C6770092E684 /* Assets.xcassets */,
@@ -144,6 +151,7 @@
 			isa = PBXGroup;
 			children = (
 				188CB5272671CB5C0092E684 /* ServerData.swift */,
+				189D5F9A2764136000A9ACDF /* ColorList.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -186,6 +194,7 @@
 			isa = PBXGroup;
 			children = (
 				189EDDE82702FBFA0042660E /* HomeViewModel.swift */,
+				189D5F982764130E00A9ACDF /* CardViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -348,6 +357,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				18C812A2270EF0D70066BE83 /* NeumorphicView.swift in Sources */,
+				189D5F9B2764136000A9ACDF /* ColorList.swift in Sources */,
 				189EDDE92702FBFA0042660E /* HomeViewModel.swift in Sources */,
 				188FBAC826EF2C5700964BC7 /* ColorExampleViewController.swift in Sources */,
 				189EDDEC27030B190042660E /* ImageLoader.swift in Sources */,
@@ -360,9 +370,11 @@
 				188CB52E2671EE1F0092E684 /* UITabBarView.swift in Sources */,
 				188CB5122671C6760092E684 /* SceneDelegate.swift in Sources */,
 				1889898A275A331C00D6331F /* LoginViewController.swift in Sources */,
+				189D5F992764130E00A9ACDF /* CardViewModel.swift in Sources */,
 				18850767267AF2F200E13BDE /* ImageDetailViewController.swift in Sources */,
 				18A5B15526E0CE560089BEB1 /* LikeListViewController.swift in Sources */,
 				188989802758CD6E00D6331F /* ExampleCardCollectionViewCell.swift in Sources */,
+				189D5F972763F57600A9ACDF /* ColorView.swift in Sources */,
 				1889898C275A634E00D6331F /* RegisterViewController.swift in Sources */,
 				18676F81267645D60053C560 /* MoreData.swift in Sources */,
 				18850769267B1E1D00E13BDE /* ShowDetailAnimator.swift in Sources */,

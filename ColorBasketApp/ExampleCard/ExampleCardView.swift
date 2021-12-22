@@ -22,6 +22,7 @@ class ExampleCardView: NeumorphicView {
 
 class ExampleCardBasketCardView: ExampleCardView {
     
+    let cardViewModel: CardViewModel = CardViewModel()
     let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "Color Basket"
@@ -32,18 +33,22 @@ class ExampleCardBasketCardView: ExampleCardView {
     
     private func setupView() {
         self.addSubview(titleLabel)
+        cardViewModel.setMaxCount(maxCount: 2)
     }
     
     override func createSubviews() {
         super.createSubviews()
         setupView()
+        let colorList: [UIColor] = cardViewModel.getColorList()
         titleLabel.sizeToFit()
         titleLabel.center = CGPoint(x: frame.width/2, y: frame.height/2 - 100)
+        titleLabel.textColor = colorList[1]
         createBasketHandle()
         createBasketBody()
     }
     
     private func createBasketHandle() {
+        let colorList: [UIColor] = cardViewModel.getColorList()
         let handleSize = self.frame.width/2
         let center = CGPoint(x: self.frame.width/2, y: self.frame.height/2)
         let beizerPath = UIBezierPath()
@@ -53,7 +58,7 @@ class ExampleCardBasketCardView: ExampleCardView {
         let handleShapeLayer = CAShapeLayer()
         handleShapeLayer.path = beizerPath.cgPath
         handleShapeLayer.lineWidth = 5
-        handleShapeLayer.strokeColor = UIColor.black.cgColor
+        handleShapeLayer.strokeColor = colorList[0].cgColor
         handleShapeLayer.fillColor = UIColor.white.cgColor
         
         self.layer.addSublayer(handleShapeLayer)
@@ -61,6 +66,7 @@ class ExampleCardBasketCardView: ExampleCardView {
     }
     
     private func createBasketBody() {
+        let colorList: [UIColor] = cardViewModel.getColorList()
         let startPoint = CGPoint(x: (self.frame.width/4)/2, y: self.frame.height/2)
         let beizerPath = UIBezierPath()
         beizerPath.move(to: startPoint)
@@ -72,7 +78,7 @@ class ExampleCardBasketCardView: ExampleCardView {
         let bodyShapeLayer = CAShapeLayer()
         bodyShapeLayer.path = beizerPath.cgPath
         bodyShapeLayer.lineWidth = 5
-        bodyShapeLayer.strokeColor = UIColor.black.cgColor
+        bodyShapeLayer.strokeColor = colorList[0].cgColor
         bodyShapeLayer.fillColor = UIColor.white.cgColor
         
         self.layer.addSublayer(bodyShapeLayer)
@@ -115,6 +121,7 @@ class ExampleCardPictureView: ExampleCardView {
         let imageView = UIImageView()
         imageView.frame = CGRect(x: self.frame.width/4, y: self.frame.height/5, width: self.frame.width/2, height: (self.frame.height/2))
         imageView.image = UIImage(named: "test")
+        imageView.contentMode = .scaleAspectFill
         return imageView
     }
     
@@ -154,22 +161,24 @@ class ExampleCardWiseSayingView: ExampleCardView {
         let wiseSayingLine = createTopLine()
         self.layer.addSublayer(wiseSayingLine)
         
+        self.addSubview(wiseSaying)
+        self.addSubview(byName)
+        
         wiseSayingLabelSetting()
         
 //        wiseSaying.text = "나는 실패한 게 아니다. 나는 잘 되지 않는 방법 1만 가지를 발견한 것이다"
 //        byName.text = "by 토마스 에디슨"
-        
-        self.addSubview(wiseSaying)
-        self.addSubview(byName)
     }
     
     private func wiseSayingLabelSetting() {
-        wiseSaying.origin(CGPoint(x: self.frame.width/8, y: self.frame.height/8 + 15))
-        wiseSaying.sizeToFit()
-        wiseSaying.frame.size.width = self.frame.width/2
-        wiseSaying.numberOfLines = 5
-        byName.origin(CGPoint(x: wiseSaying.frame.minX, y: wiseSaying.frame.maxY+10))
-        byName.sizeToFit()
+        wiseSaying.translatesAutoresizingMaskIntoConstraints = false
+        wiseSaying.topAnchor.constraint(equalTo: self.topAnchor, constant: 80).isActive = true
+        wiseSaying.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20).isActive = true
+        wiseSaying.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20).isActive = true
+        byName.translatesAutoresizingMaskIntoConstraints = false
+        byName.topAnchor.constraint(equalTo: wiseSaying.bottomAnchor, constant: 15).isActive = true
+        byName.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20).isActive = true
+        
     }
     
     private func createTopLine() ->CAShapeLayer {

@@ -308,7 +308,7 @@ class DetailImageCell: UICollectionViewCell, UICollectionViewDelegate, UICollect
             let cellImageView = UIImageView(image: cardImageView.image)
             let originFrame = self.convert(cardView.frame, to: nil)
             cellImageView.frame = originFrame
-            delegate.swipeCellPresent(cellImageView: cellImageView, originCellImageView: cardImageView)
+            delegate.swipeCellPresent(cellImageView: cellImageView, originCellImageView: cardImageView, pictureColor: pictureColor)
             cardState = .small
             defaultCard(visibleAnimation: false)
         }

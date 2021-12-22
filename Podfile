@@ -10,6 +10,6 @@ target 'ColorBasketApp' do
   pod 'Firebase'
   pod 'Firebase/Auth'
   pod 'GoogleSignIn'
-  pod 'CHTCollectionViewWaterfallLayout'
+  pod 'SDWebImage'
 
 end

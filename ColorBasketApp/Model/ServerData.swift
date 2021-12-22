@@ -31,6 +31,15 @@ struct JsonData: Codable {
     
     static let EMPTY = JsonData(url: "", title: "", color: [])
 }
+struct CellList {
+    var data: [CellData]
+    
+    init(data: [CellData]) {
+        self.data = data
+    }
+    
+    static let EMPTY = CellList(data: [])
+}
 
 struct CellData {
     let image: UIImage

@@ -8,11 +8,12 @@
 import UIKit
 
 protocol CVCellDelgate {
-    func swipeCellPresent(cellImageView: UIImageView, originCellImageView: UIImageView)
+    func swipeCellPresent(cellImageView: UIImageView, originCellImageView: UIImageView, pictureColor: [String])
     func collectionViewScrollEnabled(enable: Bool)
 }
 
 class ImageDetailViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, CVCellDelgate {
+    
     var viewModel: HomeViewModel = HomeViewModel()
     var cellSize: CGSize = CGSize(width: 250, height: 400)
     var cellIndex: IndexPath = IndexPath()
@@ -118,7 +119,7 @@ class ImageDetailViewController: UIViewController, UICollectionViewDelegate, UIC
         return detailCollectionView
     }
     
-    func swipeCellPresent(cellImageView: UIImageView, originCellImageView: UIImageView) {
+    func swipeCellPresent(cellImageView: UIImageView, originCellImageView: UIImageView, pictureColor: [String]) {
         let vc = ColorExampleViewController()
         vc.seletedImageView.image = cellImageView.image
         let transition = cardViewDetailDelegate()
@@ -127,6 +128,8 @@ class ImageDetailViewController: UIViewController, UICollectionViewDelegate, UIC
         
         vc.transitioningDelegate = transition
         vc.modalPresentationStyle = .custom
+        
+        vc.colorList = pictureColor
                 
         self.present(vc, animated: true, completion: nil)
     }

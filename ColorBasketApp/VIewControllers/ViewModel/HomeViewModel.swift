@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 class HomeViewModel: NSObject {
     var repository: Repository = Repository()
@@ -18,7 +19,9 @@ class HomeViewModel: NSObject {
     func list() {
         repository.ImageList { cellDataList in
             self.homeImage.data = cellDataList
+            self.stopLoading()
             self.imageCollection()
+            
         }
     }
     

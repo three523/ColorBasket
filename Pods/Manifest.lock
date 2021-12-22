@@ -4,9 +4,6 @@ PODS:
     - AppAuth/ExternalUserAgent (= 1.4.0)
   - AppAuth/Core (1.4.0)
   - AppAuth/ExternalUserAgent (1.4.0)
-  - CHTCollectionViewWaterfallLayout (0.9.10):
-    - CHTCollectionViewWaterfallLayout/Swift (= 0.9.10)
-  - CHTCollectionViewWaterfallLayout/Swift (0.9.10)
   - Firebase (8.7.0):
     - Firebase/Core (= 8.7.0)
   - Firebase/Auth (8.7.0):
@@ -104,17 +101,19 @@ PODS:
   - nanopb/decode (2.30908.0)
   - nanopb/encode (2.30908.0)
   - PromisesObjC (2.0.0)
+  - SDWebImage (5.12.1):
+    - SDWebImage/Core (= 5.12.1)
+  - SDWebImage/Core (5.12.1)
 
 DEPENDENCIES:
-  - CHTCollectionViewWaterfallLayout
   - Firebase
   - Firebase/Auth
   - GoogleSignIn
+  - SDWebImage
 
 SPEC REPOS:
   trunk:
     - AppAuth
-    - CHTCollectionViewWaterfallLayout
     - Firebase
     - FirebaseAnalytics
     - FirebaseAuth
@@ -129,10 +128,10 @@ SPEC REPOS:
     - GTMSessionFetcher
     - nanopb
     - PromisesObjC
+    - SDWebImage
 
 SPEC CHECKSUMS:
   AppAuth: 31bcec809a638d7bd2f86ea8a52bd45f6e81e7c7
-  CHTCollectionViewWaterfallLayout: b989a459788d7657ac010e03bc0f7eedca95a420
   Firebase: bc9325d5ee2041524bac78a5213d0e530c651309
   FirebaseAnalytics: 52768800c2add1d84b751420cb4caaf8195f2c41
   FirebaseAuth: 2e7d029977648c67a5d51a263d4cbab76d34cf12
@@ -147,7 +146,8 @@ SPEC CHECKSUMS:
   GTMSessionFetcher: 43748f93435c2aa068b1cbe39655aaf600652e91
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   PromisesObjC: 68159ce6952d93e17b2dfe273b8c40907db5ba58
+  SDWebImage: 4dc3e42d9ec0c1028b960a33ac6b637bb432207b
 
-PODFILE CHECKSUM: 763ec3937705aacc7784e722b3d81fd7139a26c9
+PODFILE CHECKSUM: 11dbd8c7c708fafed243cd5a9254ffda3a295661
 
 COCOAPODS: 1.10.1

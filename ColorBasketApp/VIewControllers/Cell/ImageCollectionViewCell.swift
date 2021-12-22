@@ -21,6 +21,7 @@ class ImageCollectionViewCell: UICollectionViewCell, UIGestureRecognizerDelegate
     var color: String = ""
     let imageLoader = ImageLoader()
     var cellInfo: JsonData?
+    var finishReload: Bool = false
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -57,6 +58,7 @@ class ImageCollectionViewCell: UICollectionViewCell, UIGestureRecognizerDelegate
         titleLabel.trailingAnchor.constraint(equalTo: mainView.trailingAnchor, constant: 4).isActive = true
         titleLabel.bottomAnchor.constraint(equalTo: mainView.bottomAnchor, constant: 4).isActive = true
         titleLabel.font = UIFont.boldSystemFont(ofSize: 20)
+        
     }
     
     func setImage(_ cellInfo: JsonData) {
@@ -66,7 +68,6 @@ class ImageCollectionViewCell: UICollectionViewCell, UIGestureRecognizerDelegate
         titleLabel.text = cellInfo.title
         
         imageLoader.loadImage(url: cellInfo.url) { image in
-//            print(image?.size)
             self.imageView.image = image
         }
     }

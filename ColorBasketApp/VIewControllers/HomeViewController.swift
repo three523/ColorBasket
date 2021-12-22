@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class HomeViewController: UIViewController , UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UINavigationControllerDelegate {
     
@@ -24,6 +25,7 @@ class HomeViewController: UIViewController , UICollectionViewDelegate, UICollect
         if viewModel.getCount() == 0 {
             viewModel.imageCollection = {self.imageCollectionView.reloadData()}
             self.getCellData(type: 2)
+            self.imageCollectionView.reloadData()
         }
     }
     
@@ -58,7 +60,7 @@ class HomeViewController: UIViewController , UICollectionViewDelegate, UICollect
         imageCollectionView.dataSource = self
         imageCollectionView.register(ImageCollectionViewCell.self, forCellWithReuseIdentifier: ImageCollectionViewCell.registerId)
         imageCollectionView.register(LodingView.self, forCellWithReuseIdentifier: LodingView.registerId)
-        
+                
     }
     
     @objc
@@ -97,7 +99,7 @@ class HomeViewController: UIViewController , UICollectionViewDelegate, UICollect
             let widthPadding = sectionInsets.left * (itemsPerRow + 1)
             
             let cellWidth = (width - widthPadding) / itemsPerRow
-            
+             
             return CGSize(width: cellWidth, height: cellWidth)
         } else {
             return CGSize(width: collectionView.frame.width, height: 100)
@@ -118,7 +120,7 @@ class HomeViewController: UIViewController , UICollectionViewDelegate, UICollect
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageCollectionViewCell.registerId, for: indexPath) as? ImageCollectionViewCell else { return UICollectionViewCell() }
             
             cell.imageView.image = nil
-
+            
             if viewModel.getCount() == 0 {
                 return cell
             }
@@ -139,6 +141,12 @@ class HomeViewController: UIViewController , UICollectionViewDelegate, UICollect
                 return LodingView()
             }
             if isLoading {
+                viewModel.stopLoading = {
+                    DispatchQueue.main.async {
+                        cell.indicatorView.stopAnimating()
+                        self.isLoading = false
+                    }
+                }
                 cell.indicatorView.startAnimating()
             }
 
@@ -164,8 +172,8 @@ class HomeViewController: UIViewController , UICollectionViewDelegate, UICollect
         transition.indexPath = indexPath
         transition.mainView = imageCollectionView
         
-        toVC.transitioningDelegate = transition
-        toVC.modalPresentationStyle = .custom
+//        toVC.transitioningDelegate = transition
+//        toVC.modalPresentationStyle = .custom
         
         self.navigationController?.pushViewController(toVC, animated: true)
     }
@@ -189,7 +197,6 @@ class HomeViewController: UIViewController , UICollectionViewDelegate, UICollect
             }
         }
     }
-    
     
     func transitionCollection() -> UICollectionView! {
         return imageCollectionView
@@ -227,12 +234,22 @@ extension UICollectionView {
     }
 }
 
-
-//@objc protocol NTTransitionProtocol {
-//    func transitionCollection() -> UICollectionView!
-//}
-//
-//@objc protocol NTTansitionWaterfallGridViewProtocol{
-//    func snapShotForTransition() -> UIView!
-//}
-//
+extension UIImageView {
+    public func imageFromURL(urlString: String, placeholder: UIImage?, completion: @escaping () -> ()) {
+        if self.image == nil {
+            self.image = placeholder
+        }
+        URLSession.shared.dataTask(with: NSURL(string: urlString)! as URL, completionHandler: { (data, response, error) -> Void in
+            if error != nil {
+                print(error)
+                return
+            }
+            DispatchQueue.main.async(execute: { () -> Void in
+                let image = UIImage(data: data!)
+                self.image = image
+                self.setNeedsLayout()
+                completion()
+            })
+        }).resume()
+    }
+}
