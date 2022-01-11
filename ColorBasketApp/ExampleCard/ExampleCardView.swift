@@ -8,6 +8,8 @@
 import UIKit
 
 class ExampleCardView: NeumorphicView {
+    var colorList: [UIColor] = []
+    let cardViewModel: CardViewModel = CardViewModel()
     
     func createSubviews() {
         self.layoutIfNeeded()
@@ -21,8 +23,6 @@ class ExampleCardView: NeumorphicView {
 }
 
 class ExampleCardBasketCardView: ExampleCardView {
-    
-    let cardViewModel: CardViewModel = CardViewModel()
     let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "Color Basket"
@@ -33,13 +33,12 @@ class ExampleCardBasketCardView: ExampleCardView {
     
     private func setupView() {
         self.addSubview(titleLabel)
-        cardViewModel.setMaxCount(maxCount: 2)
     }
     
     override func createSubviews() {
         super.createSubviews()
         setupView()
-        let colorList: [UIColor] = cardViewModel.getColorList()
+        colorList = cardViewModel.getColorList(maxCount: 2, index: 0)
         titleLabel.sizeToFit()
         titleLabel.center = CGPoint(x: frame.width/2, y: frame.height/2 - 100)
         titleLabel.textColor = colorList[1]
@@ -48,7 +47,6 @@ class ExampleCardBasketCardView: ExampleCardView {
     }
     
     private func createBasketHandle() {
-        let colorList: [UIColor] = cardViewModel.getColorList()
         let handleSize = self.frame.width/2
         let center = CGPoint(x: self.frame.width/2, y: self.frame.height/2)
         let beizerPath = UIBezierPath()
@@ -66,7 +64,6 @@ class ExampleCardBasketCardView: ExampleCardView {
     }
     
     private func createBasketBody() {
-        let colorList: [UIColor] = cardViewModel.getColorList()
         let startPoint = CGPoint(x: (self.frame.width/4)/2, y: self.frame.height/2)
         let beizerPath = UIBezierPath()
         beizerPath.move(to: startPoint)
@@ -115,6 +112,8 @@ class ExampleCardPictureView: ExampleCardView {
         self.addSubview(imageView)
         self.addSubview(mainTitle)
         self.addSubview(subTitle)
+        
+        setColor()
     }
     
     private func imageViewFrameSetting() -> UIImageView {
@@ -140,6 +139,13 @@ class ExampleCardPictureView: ExampleCardView {
 
         return pictureLayer
     }
+    
+    private func setColor() {
+        colorList = cardViewModel.getColorList(maxCount: 3, index: 1)
+        self.backgroundColor = colorList[0]
+        mainTitle.textColor = colorList[1]
+        subTitle.textColor = colorList[2]
+    }
 }
 class ExampleCardWiseSayingView: ExampleCardView {
     let wiseSaying: UILabel = {
@@ -164,10 +170,15 @@ class ExampleCardWiseSayingView: ExampleCardView {
         self.addSubview(wiseSaying)
         self.addSubview(byName)
         
+        colorList = cardViewModel.getColorList(maxCount: 3, index: 2)
+        
+        wiseSayingLine.strokeColor = colorList[0].cgColor
+        wiseSayingLine.fillColor = colorList[0].cgColor
+        wiseSaying.textColor = colorList[1]
+        byName.textColor = colorList[2]
+        
         wiseSayingLabelSetting()
         
-//        wiseSaying.text = "나는 실패한 게 아니다. 나는 잘 되지 않는 방법 1만 가지를 발견한 것이다"
-//        byName.text = "by 토마스 에디슨"
     }
     
     private func wiseSayingLabelSetting() {
@@ -210,17 +221,23 @@ class ExampleCardPhotoFrameView: ExampleCardView {
     let todayLabel: UILabel = {
         let lb = UILabel()
         lb.font = UIFont(name: "HelveticaNeue-Ligh", size: 15)
-        lb.text = "2020.09.01"
         return lb
     }()
     
     override func createSubviews() {
         super.createSubviews()
         
+        colorList = cardViewModel.getColorList(maxCount: 3, index: 3)
+        
         self.addSubview(photoFrameView)
         photoFrameView.addSubview(photoImageView)
         photoFrameView.addSubview(titleLabel)
         photoFrameView.addSubview(todayLabel)
+        
+        titleLabel.textColor = colorList[0]
+        todayLabel.textColor = colorList[1]
+        
+        todayLabel.text = "\(todayToString())"
         
         createPhotoFrame()
     }
@@ -233,7 +250,7 @@ class ExampleCardPhotoFrameView: ExampleCardView {
         photoFrameView.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.8).isActive = true
         photoFrameView.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.8).isActive = true
         photoFrameView.layer.borderWidth = 5
-        photoFrameView.layer.borderColor = UIColor.black.cgColor
+        photoFrameView.layer.borderColor = colorList[2].cgColor
         
         photoImageView.translatesAutoresizingMaskIntoConstraints = false
         photoImageView.topAnchor.constraint(equalTo: photoFrameView.topAnchor, constant: 20).isActive = true
@@ -245,14 +262,10 @@ class ExampleCardPhotoFrameView: ExampleCardView {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.topAnchor.constraint(equalTo: photoImageView.bottomAnchor, constant: 15).isActive = true
         titleLabel.centerXAnchor.constraint(equalTo: photoFrameView.centerXAnchor).isActive = true
-//        titleLabel.font = UIFont(name: "HelveticaNeue-Medium", size: 15)
-//        titleLabel.text = "Title"
         
         todayLabel.translatesAutoresizingMaskIntoConstraints = false
         todayLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 15).isActive = true
         todayLabel.centerXAnchor.constraint(equalTo: photoFrameView.centerXAnchor).isActive = true
-//        todayLabel.font = UIFont(name: "HelveticaNeue-Ligh", size: 15)
-//        todayLabel.text = "\(todayToString())"
     }
     
     private func todayToString() -> String {
@@ -267,7 +280,12 @@ class ExampleCardTextView: ExampleCardView {
     
     override func createSubviews() {
         super.createSubviews()
+        
+        colorList = cardViewModel.getColorList(maxCount: 2, index: 4)
         self.addSubview(text)
+        
+        text.textColor = colorList[0]
+        self.backgroundColor = colorList[1]
         createText()
     }
     
@@ -304,10 +322,16 @@ class ExampleCardProfileView: ExampleCardView {
     override func createSubviews() {
         super.createSubviews()
         
+        colorList = cardViewModel.getColorList(maxCount: 3, index: 5)
+        
         self.addSubview(profileImageView)
         self.addSubview(nickName)
         self.addSubview(tagStackView)
         self.addSubview(hashTag)
+        
+        nickName.textColor = colorList[0]
+        tagStackView.tintColor = colorList[1]
+        hashTag.textColor = colorList[2]
         
         settings()
     }
@@ -339,10 +363,6 @@ class ExampleCardProfileView: ExampleCardView {
         hashTag.translatesAutoresizingMaskIntoConstraints = false
         hashTag.topAnchor.constraint(equalTo: tagStackView.bottomAnchor, constant: 15).isActive = true
         hashTag.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-//        hashTag.font = UIFont(name: "HelveticaNeue-Ligh", size: 17)
-//        hashTag.text = "#test\n#testtest"
-//        hashTag.textAlignment = .center
-//        hashTag.numberOfLines = 2
     }
 }
 
@@ -355,7 +375,7 @@ class ExampleCardViewController: UIViewController {
     
     func setupView() {
         view.backgroundColor = UIColor(hexFromString: "EFEEEE")
-        let test = ExampleCardPictureView()
+        let test = ExampleCardProfileView()
         
         view.addSubview(test)
         test.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true

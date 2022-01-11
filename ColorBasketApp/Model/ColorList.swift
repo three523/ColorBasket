@@ -6,13 +6,16 @@
 //
 
 import Foundation
+import UIKit
 
 class ColorList {
-    var colorList: [TouchColorView]
+    var colorViewList: [TouchColorView]
+    var colorList: [UIColor]
     
-    init(colorList: [TouchColorView]) {
+    init(colorViewList: [TouchColorView], colorList: [UIColor]) {
+        self.colorViewList = colorViewList
         self.colorList = colorList
     }
     
-    static let EMPTY = ColorList.init(colorList: [])
+    static let EMPTY = ColorList.init(colorViewList: [], colorList: [])
 }

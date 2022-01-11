@@ -24,7 +24,6 @@
 		188CB51C2671C6770092E684 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 188CB51A2671C6770092E684 /* LaunchScreen.storyboard */; };
 		188CB5252671C9E10092E684 /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188CB5242671C9E10092E684 /* ImageCollectionViewCell.swift */; };
 		188CB5282671CB5C0092E684 /* ServerData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188CB5272671CB5C0092E684 /* ServerData.swift */; };
-		188CB52E2671EE1F0092E684 /* UITabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188CB52D2671EE1F0092E684 /* UITabBarView.swift */; };
 		188FBAC826EF2C5700964BC7 /* ColorExampleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188FBAC726EF2C5700964BC7 /* ColorExampleViewController.swift */; };
 		189D5F972763F57600A9ACDF /* ColorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189D5F962763F57600A9ACDF /* ColorView.swift */; };
 		189D5F992764130E00A9ACDF /* CardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189D5F982764130E00A9ACDF /* CardViewModel.swift */; };
@@ -62,7 +61,6 @@
 		188CB51D2671C6770092E684 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		188CB5242671C9E10092E684 /* ImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		188CB5272671CB5C0092E684 /* ServerData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerData.swift; sourceTree = "<group>"; };
-		188CB52D2671EE1F0092E684 /* UITabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITabBarView.swift; sourceTree = "<group>"; };
 		188FBAC726EF2C5700964BC7 /* ColorExampleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExampleViewController.swift; sourceTree = "<group>"; };
 		189D5F962763F57600A9ACDF /* ColorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorView.swift; sourceTree = "<group>"; };
 		189D5F982764130E00A9ACDF /* CardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardViewModel.swift; sourceTree = "<group>"; };
@@ -135,7 +133,6 @@
 				188CB5112671C6760092E684 /* SceneDelegate.swift */,
 				18850768267B1E1D00E13BDE /* ShowDetailAnimator.swift */,
 				18676F80267645D60053C560 /* MoreData.swift */,
-				188CB52D2671EE1F0092E684 /* UITabBarView.swift */,
 				189D5F962763F57600A9ACDF /* ColorView.swift */,
 				188CB52A2671CC4D0092E684 /* Model */,
 				188CB5152671C6760092E684 /* Main.storyboard */,
@@ -367,7 +364,6 @@
 				188CB5102671C6760092E684 /* AppDelegate.swift in Sources */,
 				188CB5252671C9E10092E684 /* ImageCollectionViewCell.swift in Sources */,
 				188CB5282671CB5C0092E684 /* ServerData.swift in Sources */,
-				188CB52E2671EE1F0092E684 /* UITabBarView.swift in Sources */,
 				188CB5122671C6760092E684 /* SceneDelegate.swift in Sources */,
 				1889898A275A331C00D6331F /* LoginViewController.swift in Sources */,
 				189D5F992764130E00A9ACDF /* CardViewModel.swift in Sources */,

@@ -9,48 +9,61 @@ import Foundation
 import UIKit
 
 class CardViewModel: NSObject {
-    var colorList: ColorList = ColorList.EMPTY
-    static var maxCount = 3
+    var colorList: [ColorList] = Array(repeating: ColorList.EMPTY, count: 6)
+    static var maxCount: [Int] = Array(repeating: 0, count: 6)
     static var cardCollection: () -> Void = { }
     
-    func getColorList() -> [UIColor] {
-        if getCount() != 0 {
+    func getColorList(maxCount: Int, index: Int) -> [UIColor] {
+        CardViewModel.maxCount[index] = maxCount
+        if getCount(index: index) != 0 {
             var uiColorList: [UIColor] = []
-            colorList.colorList.forEach { view in
-                uiColorList.append(view.backgroundColor ?? UIColor(hexFromString: "121212")!)
+            colorList[index].colorList.forEach { color in
+                uiColorList.append(color)
             }
-            if uiColorList.count < CardViewModel.maxCount {
-                for _ in 0..<(CardViewModel.maxCount - uiColorList.count) {
+            if uiColorList.count < CardViewModel.maxCount[index] {
+                for _ in 0..<(CardViewModel.maxCount[index] - uiColorList.count) {
                     uiColorList.append(UIColor(hexFromString: "121212")!)
                 }
             }
             return uiColorList
         } else {
-            return Array(repeating: UIColor(hexFromString: "121212")!, count: 6)
+            return Array(repeating: UIColor(hexFromString: "121212")!, count: maxCount)
         }
     }
     
-    func listAppend(view: TouchColorView) {
-        if getCount() < CardViewModel.maxCount {
-            colorList.colorList.append(view)
-            CardViewModel.cardCollection()
+    func listAppend(view: TouchColorView, index: Int) {
+        if getCount(index: index) < CardViewModel.maxCount[index] {
+            colorList[index].colorViewList.append(view)
+            colorList[index].colorList.append(view.backgroundColor ?? UIColor.black)
         } else {
-            let removeView = colorList.colorList.removeFirst()
+            colorList[index].colorList.removeFirst()
+            let removeView = colorList[index].colorViewList.removeFirst()
             removeView.isSelected = !removeView.isSelected
-            colorList.colorList.append(view)
+            colorList[index].colorViewList.append(view)
+            colorList[index].colorList.append(view.backgroundColor ?? UIColor.black)
             CardViewModel.cardCollection()
         }
     }
     
-    func listRemove(view: TouchColorView) {
-        colorList.colorList.removeAll{ $0 == view }
+    func listRemove(view: TouchColorView, index: Int) {
+        colorList[index].colorList.removeAll{ $0 == view.backgroundColor }
+        colorList[index].colorViewList.removeAll{ $0 == view }
+        CardViewModel.cardCollection()
     }
     
-    func getCount() -> Int {
-        return colorList.colorList.count
+    func getCount(index: Int) -> Int {
+        return colorList[index].colorViewList.count
     }
     
-    func setMaxCount(maxCount: Int) {
-        CardViewModel.maxCount = maxCount
+    func changeColorListView(index: Int) {
+        
+        print("aaaaa",colorList[0].colorList,"bbbb",colorList[1].colorList)
+        let detailColorListView = colorList[index].colorViewList
+        let detailColorList = colorList[index].colorList
+        for index in 0..<detailColorList.count {
+            detailColorListView[index].backgroundColor = detailColorList[index]
+            detailColorListView[index].isSelected = true
+        }
+        CardViewModel.cardCollection()
     }
 }

@@ -83,8 +83,11 @@ class ColorExampleViewController: UIViewController, UICollectionViewDelegate, UI
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         let center = self.view.convert(self.collectionView.center, to: self.collectionView)
-        let index = collectionView.indexPathForItem(at: center)!
-         collectionView.cellForItem(at: index)
+        let indexPath = collectionView.indexPathForItem(at: center)!
+         collectionView.cellForItem(at: indexPath)
+        let index = indexPath.item
+        
+        colorListView.selectClear(index: index)
     }
 }
 

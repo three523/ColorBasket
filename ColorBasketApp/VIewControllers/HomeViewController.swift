@@ -34,10 +34,9 @@ class HomeViewController: UIViewController , UICollectionViewDelegate, UICollect
                 
         let refreshContoller = UIRefreshControl()
         refreshContoller.addTarget(self, action: #selector(refreshData), for: .valueChanged)
-        
+                
         self.navigationController?.delegate = self
                 
-        let tabBarView = UITabBarView()
         let collectionViewLayout = UICollectionViewFlowLayout()
         collectionViewLayout.scrollDirection = .vertical
         
@@ -52,15 +51,14 @@ class HomeViewController: UIViewController , UICollectionViewDelegate, UICollect
         imageCollectionView.showsVerticalScrollIndicator = false
         
         view.addSubview(imageCollectionView)
-        view.addSubview(tabBarView)
         imageCollectionView.refreshControl = refreshContoller
-        tabBarView.setupView()
         
         imageCollectionView.delegate = self
         imageCollectionView.dataSource = self
         imageCollectionView.register(ImageCollectionViewCell.self, forCellWithReuseIdentifier: ImageCollectionViewCell.registerId)
         imageCollectionView.register(LodingView.self, forCellWithReuseIdentifier: LodingView.registerId)
-                
+        
+        
     }
     
     @objc
@@ -147,6 +145,8 @@ class HomeViewController: UIViewController , UICollectionViewDelegate, UICollect
                         self.isLoading = false
                     }
                 }
+                
+                // TODO: 셀 추가 생성후 인디케이터 제거하기
                 cell.indicatorView.startAnimating()
             }
 
