@@ -38,7 +38,6 @@ class ColorListView: UIStackView {
         self.colorList = colorList
         
         self.layoutIfNeeded()
-        print(self.frame)
         
         self.addArrangedSubview(stackView1)
         self.addArrangedSubview(stackView2)
@@ -48,9 +47,12 @@ class ColorListView: UIStackView {
         stackView2.addArrangedSubview(colorView4)
         stackView2.addArrangedSubview(colorView5)
         stackView2.addArrangedSubview(colorView6)
+        
+        stackView1.subviews.forEach{ view in
+            view.backgroundColor == UIColor.white
+        }
 
         stackView1.layoutIfNeeded()
-        print(stackView1.frame)
         
         colorViewSetting()
     }
@@ -63,37 +65,58 @@ class ColorListView: UIStackView {
         colorView5.backgroundColor = UIColor(hexFromString: colorList[4])
         colorView6.backgroundColor = UIColor(hexFromString: colorList[5])
         
-        colorView1.cardViewModel = cardViewModel
-        colorView2.cardViewModel = cardViewModel
-        colorView3.cardViewModel = cardViewModel
-        colorView4.cardViewModel = cardViewModel
-        colorView5.cardViewModel = cardViewModel
-        colorView6.cardViewModel = cardViewModel
+//        colorView1.cardViewModel = cardViewModel
+//        colorView2.cardViewModel = cardViewModel
+//        colorView3.cardViewModel = cardViewModel
+//        colorView4.cardViewModel = cardViewModel
+//        colorView5.cardViewModel = cardViewModel
+//        colorView6.cardViewModel = cardViewModel
     }
+    
+    public func selectClear(index: Int) {
+        indexSetting(index: index)
+        cardViewModel.changeColorListView(index: index)
+    }
+    
+    private func indexSetting(index: Int) {
+        colorView1.index = index
+        colorView2.index = index
+        colorView3.index = index
+        colorView4.index = index
+        colorView5.index = index
+        colorView6.index = index
+        
+        stackView1.arrangedSubviews.forEach{ view in
+            (view as? TouchColorView)!.isSelected = false
+        }
+        stackView2.arrangedSubviews.forEach{ view in
+            (view as? TouchColorView)!.isSelected = false
+        }
+    }
+    
 }
 
 class TouchColorView: UIButton {
     
     var cardViewModel: CardViewModel = CardViewModel()
-    var maxColorList = 3
+    var index: Int = 0
     
     override var isSelected: Bool {
         get {
             return super.isSelected
         }
         set {
-//            guard let cardViewModel = cardViewModel else { return }
             
             if newValue {
                 UIView.animate(withDuration: 0.5) {
-                    self.layer.borderWidth = 1
+                    self.layer.borderWidth = 5
                 }
-                cardViewModel.listAppend(view: self)
+                cardViewModel.listAppend(view: self, index: index)
             } else {
                 UIView.animate(withDuration: 0.5) {
                     self.layer.borderWidth = 0
                 }
-                cardViewModel.listRemove(view: self)
+                cardViewModel.listRemove(view: self, index: index)
             }
 
             super.isSelected = newValue
@@ -108,6 +131,7 @@ class TouchColorView: UIButton {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
         isSelected = !isSelected
+//        if !isSelected { cardViewModel.listRemove(view: self, index: index) }
     }
     
 }

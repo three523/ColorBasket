@@ -21,7 +21,6 @@ class HomeViewModel: NSObject {
             self.homeImage.data = cellDataList
             self.stopLoading()
             self.imageCollection()
-            
         }
     }
     
